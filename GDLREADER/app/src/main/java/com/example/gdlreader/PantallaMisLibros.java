@@ -13,29 +13,28 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class PantallaPrincipal extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class PantallaMisLibros extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     Toolbar toolbarNav;
-    ImageView imageView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pantalla_principal);
+        setContentView(R.layout.activity_pantalla_mis_libros);
+
         /*Inicializamos variables*/
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbarNav = findViewById(R.id.toolbar);
-        imageView =  (ImageView) findViewById(R.id.imagePortada1);
+
+        navigationView.setNavigationItemSelectedListener(this);
 
         /*Proceso para action bar*/
         navigationView.bringToFront();
@@ -43,53 +42,23 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbarNav,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
-
-        navigationView.setNavigationItemSelectedListener(this);
-
-        /*Creamos el evento para seleccionar un libro*/
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openInformacionLibros();
-            }
-        });
-
-        /*Aquí se cambia el color del action bar*/
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.white)));
-    }
-
-
-    public void openInformacionLibros(){
-        Intent intent = new Intent(this, InformacionLibro.class);
-        startActivity(intent);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }else{
-            super.onBackPressed();
-        }
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
         switch (item.getItemId()){
             case R.id.nav_perfil:
                 /*Toast toast = Toast.makeText(getApplicationContext(), "Has dado click en perfil", Toast.LENGTH_SHORT);
                 toast.show();*/
-                Intent intent = new Intent(PantallaPrincipal.this, PantallaPerfil.class);
+                Intent intent = new Intent(this, PantallaPerfil.class);
                 startActivity(intent);
                 break;
             case R.id.nav_Busqueda:
-                 intent = new Intent(this, PantallaBusqueda.class);
+                intent = new Intent(this, PantallaBusqueda.class);
                 startActivity(intent);
                 break;
             case R.id.nav_tarjeta:
-                 intent = new Intent(this, PantallaTarjeta.class);
+                intent = new Intent(this, PantallaTarjeta.class);
                 startActivity(intent);
                 break;
             case R.id.nav_libro:
@@ -97,7 +66,7 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
                 startActivity(intent);
                 break;
             case R.id.nav_cerrarsesion:
-                 intent = new Intent(this, MainActivity.class);
+                intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;
         }

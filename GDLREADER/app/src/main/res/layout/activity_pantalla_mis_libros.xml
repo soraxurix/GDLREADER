@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PantallaPrincipal"
+    tools:context=".PantallaMisLibros"
     android:id="@+id/drawer_layout"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
@@ -199,12 +199,11 @@
                     android:layout_marginTop="10dp"
                     android:textColor="#5C9BBD"
                     android:textSize="13dp"
-                    android:text="Genero: Química"
+                    android:text="Genero: Mis Libros"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.02"
                     app:layout_constraintStart_toEndOf="@id/imagePortada3"
                     app:layout_constraintTop_toBottomOf="@id/textAutor3" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 

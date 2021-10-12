@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PantallaPerfil"
+    android:id="@+id/drawer_layout"
+    android:fitsSystemWindows="true"
+
+    >
+    <!--tools:openDrawer="start"-->
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/nav_view"
+        app:headerLayout="@layout/header"
+        app:menu="@menu/main_menu"
+        android:layout_gravity="start"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/toolbar"
+            android:elevation="4dp"
+            app:popupTheme="@color/color_principal"
+            app:subtitleTextColor="#28A5E8"
+            app:navigationIcon="@drawable/icon_barra_menu"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewTitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Perfil"
+                    android:textAlignment="center"
+                    android:textColor="@color/color_principal"
+                    android:textSize="30dp" />
+
+                <ImageView
+                    android:id="@+id/imagenPerfil"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_below="@+id/textViewTitulo"
+                    android:src="@drawable/foto_perfil" />
+
+                <TextView
+                    android:id="@+id/textNombreUsuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewTitulo"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="35dp"
+                    android:layout_toEndOf="@id/imagenPerfil"
+                    android:text="Carlos Uriel Cruz Rodriguez"
+                    android:textColor="#2F7EA8"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textNombreUsuario"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@id/imagenPerfil"
+                    android:text="18150335"
+                    android:textColor="#2F7EA8"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/textCabezeraCorreo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imagenPerfil"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="15dp"
+                    android:text="Email"
+                    android:textColor="#5DA2C6"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/textCorreo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textCabezeraCorreo"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:editable="false"
+                    android:text="18150335@aguascalientes.tecnm.mx"
+                    android:textColor="@color/color_principal"
+                    android:textSize="18dp" />
+
+
+                <TextView
+                    android:id="@+id/textCabezeraCarrera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textCorreo"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="30dp"
+                    android:text="Carrera"
+                    android:textColor="#5DA2C6"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/textCarrera"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textCabezeraCarrera"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:editable="false"
+                    android:text="TIC'S"
+                    android:textColor="@color/color_principal"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/textCabezaSemestre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textCarrera"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="30dp"
+                    android:text="Semestre"
+                    android:textColor="#5DA2C6"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/textSemestre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textCabezaSemestre"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:editable="false"
+                    android:text="8"
+                    android:textColor="@color/color_principal"
+                    android:textSize="18dp" />
+
+
+            </RelativeLayout>
+
+            <!--<ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/imagePortada1"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/foto_perfil"
+                app:layout_constraintStart_toStartOf="parent"
+                />-->
+
+
+        </ScrollView>
+
+
+    </LinearLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
