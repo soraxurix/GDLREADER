@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GDLREADER">
         <activity
+            android:name=".GeneroLibros"
+            android:exported="false" />
+        <activity
+            android:name=".SobreNosotros"
+            android:exported="false" />
+        <activity
+            android:name=".Registrar"
+            android:exported="true" />
+        <activity
             android:name=".PantallaMisLibros"
             android:exported="true" />
         <activity
@@ -29,7 +38,8 @@
             android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

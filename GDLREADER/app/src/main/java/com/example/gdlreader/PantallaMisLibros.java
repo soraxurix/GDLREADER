@@ -3,6 +3,7 @@ package com.example.gdlreader;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -24,16 +25,46 @@ public class PantallaMisLibros extends AppCompatActivity implements NavigationVi
     NavigationView navigationView;
     Toolbar toolbarNav;
 
+    private ImageView imageView1;
+    private ImageView imageView2;
+    private ImageView imageView3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_mis_libros);
 
+        getWindow().setStatusBarColor(ContextCompat.getColor(PantallaMisLibros.this,R.color.color_principal));
+
         /*Inicializamos variables*/
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbarNav = findViewById(R.id.toolbar);
+        imageView1 =  (ImageView) findViewById(R.id.imagePortada1);
+        imageView2 =  (ImageView) findViewById(R.id.imagePortada2);
+        imageView3 =  (ImageView) findViewById(R.id.imagePortada3);
 
+
+        imageView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openInformacionLibros();
+            }
+        });
+
+        imageView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openInformacionLibros();
+            }
+        });
+
+        imageView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openInformacionLibros();
+            }
+        });
         navigationView.setNavigationItemSelectedListener(this);
 
         /*Proceso para action bar*/
@@ -43,14 +74,23 @@ public class PantallaMisLibros extends AppCompatActivity implements NavigationVi
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
     }
+    public void openInformacionLibros(){
+        Intent intent = new Intent(this, InformacionLibro.class);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
+
+            case R.id.nav_inicio:
+                Intent intent = new Intent(this, PantallaPrincipal.class);
+                startActivity(intent);
+                break;
             case R.id.nav_perfil:
                 /*Toast toast = Toast.makeText(getApplicationContext(), "Has dado click en perfil", Toast.LENGTH_SHORT);
                 toast.show();*/
-                Intent intent = new Intent(this, PantallaPerfil.class);
+                intent = new Intent(this, PantallaPerfil.class);
                 startActivity(intent);
                 break;
             case R.id.nav_Busqueda:
@@ -67,6 +107,10 @@ public class PantallaMisLibros extends AppCompatActivity implements NavigationVi
                 break;
             case R.id.nav_cerrarsesion:
                 intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_nosotros:
+                intent = new Intent(this, SobreNosotros.class);
                 startActivity(intent);
                 break;
         }

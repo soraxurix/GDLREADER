@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GeneroLibros"
+    android:id="@+id/drawer_layout"
+    android:fitsSystemWindows="true"
+
+    >
+    <!--tools:openDrawer="start"-->
+
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/nav_view"
+        app:headerLayout="@layout/header"
+        app:menu="@menu/main_menu"
+        android:layout_gravity="start"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/toolbar"
+            android:elevation="4dp"
+            app:popupTheme="@color/color_principal"
+            app:subtitleTextColor="#28A5E8"
+            app:navigationIcon="@drawable/icon_barra_menu"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/text_titulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TICS"
+                    android:textAlignment="center"
+                    android:textColor="@color/color_principal"
+                    android:textStyle="bold"
+                    android:textSize="30dp" />
+
+                <!--Libro 1-->
+                <ImageView
+                    android:id="@+id/image_portada1"
+                    android:layout_width="150dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@+id/text_titulo"
+                    android:src="@drawable/portada1" />
+
+                <TextView
+                    android:id="@+id/text_titulo1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text_titulo"
+                    android:layout_marginTop="20dp"
+                    android:layout_toEndOf="@id/image_portada1"
+                    android:text="MySQL and JSON"
+                    android:textColor="@color/color_principal"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/text_autor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text_titulo1"
+                    android:layout_marginTop="15dp"
+                    android:layout_toEndOf="@id/image_portada1"
+                    android:text="Autor: David Stokes"
+                    android:textColor="#5C9BBD"
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text_autor"
+                    android:layout_marginTop="15dp"
+                    android:layout_toEndOf="@id/image_portada1"
+                    android:text="Genero: Programación, TIC's"
+                    android:textColor="#5C9BBD"
+                    android:textSize="13dp" />
+
+                <ImageView
+                    android:id="@+id/image_portada2"
+                    android:layout_width="150dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@+id/image_portada1"
+                    android:src="@drawable/portada2" />
+
+                <TextView
+                    android:id="@+id/text_titulo2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/image_portada1"
+                    android:layout_marginTop="20dp"
+                    android:layout_toEndOf="@id/image_portada2"
+                    android:text="Java For Begginers"
+                    android:textColor="@color/color_principal"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/text_autor2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text_titulo2"
+                    android:layout_marginTop="15dp"
+                    android:layout_toEndOf="@id/image_portada2"
+                    android:text="Autor: Josh Thompsons"
+                    android:textColor="#5C9BBD"
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text_autor2"
+                    android:layout_marginTop="15dp"
+                    android:layout_toEndOf="@id/image_portada2"
+                    android:text="Genero: Programación, TIC's"
+                    android:textColor="#5C9BBD"
+                    android:textSize="13dp" />
+            </RelativeLayout>
+        </ScrollView>
+    </LinearLayout>
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

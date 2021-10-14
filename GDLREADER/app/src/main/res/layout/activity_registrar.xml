@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            >
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                app:srcCompat="@drawable/logo"/>
+
+            <EditText
+                android:id="@+id/editTextNoControl"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/imageView1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/style_border_text"
+                android:hint="No. Control"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/edittextPass"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/editTextNoControl"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/style_border_text"
+                android:hint="Nombre completo"
+                android:inputType="textPassword" />
+
+            <EditText
+                android:id="@+id/editTextCorreo"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/edittextPass"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/style_border_text"
+                android:hint="Correo electrónico" />
+            <TextView
+                android:id="@+id/textcarrera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Carrera"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:textSize="18dp"
+                android:textColor="@color/Registrarse"
+                android:layout_below="@id/editTextCorreo"
+                />
+
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textcarrera"
+
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="55dp"
+                android:layout_marginTop="15dp" />
+
+            <TextView
+                android:id="@+id/textsemestre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_centerHorizontal="true"
+                android:text="Semestre"
+                android:textColor="@color/Registrarse"
+                android:textSize="18dp"
+                android:layout_below="@id/spinner1" />
+
+            <Spinner
+                android:id="@+id/spinner2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/textsemestre" />
+
+            <Button
+                android:id="@+id/buttonInicarSesion"
+                android:layout_width="280dp"
+                android:layout_height="60dp"
+                android:layout_below="@id/spinner2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="35dp"
+                android:background="#28A5E8"
+                android:text="Registrarse"
+                android:textColor="#FFF"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>

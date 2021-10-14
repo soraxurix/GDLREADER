@@ -7,9 +7,9 @@
     tools:context=".PantallaPerfil"
     android:id="@+id/drawer_layout"
     android:fitsSystemWindows="true"
-
+    tools:openDrawer="start"
     >
-    <!--tools:openDrawer="start"-->
+
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -40,7 +40,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:padding="10dp">
 
                 <TextView
                     android:id="@+id/textViewTitulo"
@@ -87,8 +88,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imagenPerfil"
-                    android:layout_marginTop="30dp"
                     android:layout_marginStart="15dp"
+                    android:layout_marginTop="30dp"
                     android:text="Email"
                     android:textColor="#5DA2C6"
                     android:textSize="20dp" />
@@ -99,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textCabezeraCorreo"
                     android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
+
                     android:editable="false"
                     android:text="18150335@aguascalientes.tecnm.mx"
                     android:textColor="@color/color_principal"
@@ -123,7 +124,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textCabezeraCarrera"
                     android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
+
                     android:editable="false"
                     android:text="TIC'S"
                     android:textColor="@color/color_principal"
@@ -146,7 +147,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textCabezaSemestre"
                     android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
+
                     android:editable="false"
                     android:text="8"
                     android:textColor="@color/color_principal"

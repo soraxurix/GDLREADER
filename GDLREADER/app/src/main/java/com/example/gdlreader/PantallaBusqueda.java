@@ -3,6 +3,8 @@ package com.example.gdlreader;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -13,6 +15,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -24,15 +27,20 @@ public class PantallaBusqueda extends AppCompatActivity implements NavigationVie
     NavigationView navigationView;
     Toolbar toolbarNav;
 
+    CardView cardView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_busqueda);
 
+        getWindow().setStatusBarColor(ContextCompat.getColor(PantallaBusqueda.this,R.color.color_principal));
+
         /*Inicializamos variables*/
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbarNav = findViewById(R.id.toolbar);
+        cardView =  (CardView) findViewById(R.id.CardView1);
 
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -42,15 +50,35 @@ public class PantallaBusqueda extends AppCompatActivity implements NavigationVie
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbarNav,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openGeneroLibros();
+            }
+        });
+
+    }
+
+    public void openGeneroLibros() {
+        /*Toast toast = Toast.makeText(getApplicationContext(), "Se redireccionará...", Toast.LENGTH_SHORT);
+        toast.show();*/
+        Intent intent = new Intent(this, GeneroLibros.class);
+        startActivity(intent);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
+
+            case R.id.nav_inicio:
+                Intent intent = new Intent(this, PantallaPrincipal.class);
+                startActivity(intent);
+                break;
             case R.id.nav_perfil:
                 /*Toast toast = Toast.makeText(getApplicationContext(), "Has dado click en perfil", Toast.LENGTH_SHORT);
                 toast.show();*/
-                Intent intent = new Intent(this, PantallaPerfil.class);
+                intent = new Intent(this, PantallaPerfil.class);
                 startActivity(intent);
                 break;
             case R.id.nav_Busqueda:
@@ -67,6 +95,10 @@ public class PantallaBusqueda extends AppCompatActivity implements NavigationVie
                 break;
             case R.id.nav_cerrarsesion:
                 intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_nosotros:
+                intent = new Intent(this, SobreNosotros.class);
                 startActivity(intent);
                 break;
         }

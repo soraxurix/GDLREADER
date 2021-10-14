@@ -3,6 +3,7 @@ package com.example.gdlreader;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -24,7 +25,9 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     Toolbar toolbarNav;
-    ImageView imageView;
+    private ImageView imageView1;
+    private ImageView imageView2;
+    private ImageView imageView3;
 
 
     @Override
@@ -35,7 +38,12 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbarNav = findViewById(R.id.toolbar);
-        imageView =  (ImageView) findViewById(R.id.imagePortada1);
+        imageView1 =  (ImageView) findViewById(R.id.imagePortada1);
+        imageView2 =  (ImageView) findViewById(R.id.imagePortada2);
+        imageView3 =  (ImageView) findViewById(R.id.imagePortada3);
+
+
+        getWindow().setStatusBarColor(ContextCompat.getColor(PantallaPrincipal.this,R.color.color_principal));
 
         /*Proceso para action bar*/
         navigationView.bringToFront();
@@ -48,7 +56,21 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
         navigationView.setNavigationItemSelectedListener(this);
 
         /*Creamos el evento para seleccionar un libro*/
-        imageView.setOnClickListener(new View.OnClickListener() {
+        imageView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openInformacionLibros();
+            }
+        });
+
+        imageView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openInformacionLibros();
+            }
+        });
+
+        imageView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openInformacionLibros();
@@ -78,10 +100,15 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()){
+
+            case R.id.nav_inicio:
+                Intent intent = new Intent(this, PantallaPrincipal.class);
+                startActivity(intent);
+                break;
             case R.id.nav_perfil:
                 /*Toast toast = Toast.makeText(getApplicationContext(), "Has dado click en perfil", Toast.LENGTH_SHORT);
                 toast.show();*/
-                Intent intent = new Intent(PantallaPrincipal.this, PantallaPerfil.class);
+                intent = new Intent(PantallaPrincipal.this, PantallaPerfil.class);
                 startActivity(intent);
                 break;
             case R.id.nav_Busqueda:
@@ -98,6 +125,10 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
                 break;
             case R.id.nav_cerrarsesion:
                  intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_nosotros:
+                intent = new Intent(this, SobreNosotros.class);
                 startActivity(intent);
                 break;
         }

@@ -25,4 +25,10 @@
     </style>
     <style name="Theme.GDLREADER.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.GDLREADER.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-</resources>
+
+
+    <style name="SplashTheme" parent="Theme.GDLREADER">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
+    </resources>

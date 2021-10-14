@@ -60,16 +60,11 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="354dp"
                     android:layout_height="198dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_marginBottom="32dp"
                     android:elevation="5dp"
                     app:cardBackgroundColor="@color/color_principal"
                     app:cardCornerRadius="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.495"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.403">

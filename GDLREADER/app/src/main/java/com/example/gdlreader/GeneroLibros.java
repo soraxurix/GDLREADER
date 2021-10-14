@@ -21,28 +21,53 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class InformacionLibro extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class GeneroLibros extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     Toolbar toolbarNav;
 
-    private Button buttonApartar;
+    private ImageView imageView1;
+    private ImageView imageView2;
+    private ImageView imageView3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_informacion_libro);
+        setContentView(R.layout.activity_genero_libros);
 
-        getWindow().setStatusBarColor(ContextCompat.getColor(InformacionLibro.this,R.color.color_principal));
+        getWindow().setStatusBarColor(ContextCompat.getColor(GeneroLibros.this,R.color.color_principal));
 
         /*Inicializamos variables*/
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbarNav = findViewById(R.id.toolbar);
-        buttonApartar = (Button) findViewById(R.id.buttonApartar);
+        imageView1 =  (ImageView) findViewById(R.id.image_portada1);
+        imageView2 =  (ImageView) findViewById(R.id.image_portada2);
+        /*imageView3 =  (ImageView) findViewById(R.id.imagePortada3);*/
 
+
+        imageView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openInformacionLibros();
+            }
+        });
+
+        imageView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openInformacionLibros();
+            }
+        });
+
+        /*imageView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openInformacionLibros();
+            }
+        });*/
         navigationView.setNavigationItemSelectedListener(this);
 
         /*Proceso para action bar*/
@@ -52,13 +77,12 @@ public class InformacionLibro extends AppCompatActivity implements NavigationVie
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        buttonApartar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Se ha apartado el libro", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        });
+        /*Evento para el botón de apartar*/
+    }
+
+    public void openInformacionLibros(){
+        Intent intent = new Intent(this, InformacionLibro.class);
+        startActivity(intent);
     }
 
     @Override

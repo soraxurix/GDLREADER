@@ -11,6 +11,7 @@
 
 
 
+
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -72,7 +73,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginTop="36dp"
-                    android:text="Mushoku Tensei"
+                    android:text="MySQL and JSON"
                     android:textColor="@color/color_principal"
                     android:textSize="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -87,7 +88,7 @@
                     android:layout_marginTop="10dp"
                     android:textColor="#5C9BBD"
                     android:textSize="13dp"
-                    android:text="@string/mushoku_tensei"
+                    android:text="David Stokes"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.02"
                     app:layout_constraintStart_toEndOf="@id/imagePortada1"
@@ -99,7 +100,7 @@
                     android:layout_marginTop="10dp"
                     android:textColor="#5C9BBD"
                     android:textSize="13dp"
-                    android:text="Genero: Fantasía, Aventura"
+                    android:text="Genero: Programación, TIC's"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.02"
                     app:layout_constraintStart_toEndOf="@id/imagePortada1"
@@ -148,7 +149,7 @@
                     android:layout_marginTop="10dp"
                     android:textColor="#5C9BBD"
                     android:textSize="13dp"
-                    android:text="Genero: Programación"
+                    android:text="Genero: Programación, TIC's"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.02"
                     app:layout_constraintStart_toEndOf="@id/imagePortada1"

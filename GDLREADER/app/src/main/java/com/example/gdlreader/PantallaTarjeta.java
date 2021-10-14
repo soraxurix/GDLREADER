@@ -3,6 +3,7 @@ package com.example.gdlreader;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -30,6 +31,8 @@ public class PantallaTarjeta extends AppCompatActivity implements NavigationView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_tarjeta);
 
+        getWindow().setStatusBarColor(ContextCompat.getColor(PantallaTarjeta.this,R.color.color_principal));
+
         /*Inicializamos variables*/
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -50,10 +53,15 @@ public class PantallaTarjeta extends AppCompatActivity implements NavigationView
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
+
+            case R.id.nav_inicio:
+                Intent intent = new Intent(this, PantallaPrincipal.class);
+                startActivity(intent);
+                break;
             case R.id.nav_perfil:
                 /*Toast toast = Toast.makeText(getApplicationContext(), "Has dado click en perfil", Toast.LENGTH_SHORT);
                 toast.show();*/
-                Intent intent = new Intent(this, PantallaPerfil.class);
+                intent = new Intent(this, PantallaPerfil.class);
                 startActivity(intent);
                 break;
             case R.id.nav_Busqueda:
@@ -70,6 +78,10 @@ public class PantallaTarjeta extends AppCompatActivity implements NavigationView
                 break;
             case R.id.nav_cerrarsesion:
                 intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_nosotros:
+                intent = new Intent(this, SobreNosotros.class);
                 startActivity(intent);
                 break;
         }

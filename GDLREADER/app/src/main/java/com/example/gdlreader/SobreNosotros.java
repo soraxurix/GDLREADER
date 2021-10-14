@@ -3,45 +3,30 @@ package com.example.gdlreader;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
-
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class InformacionLibro extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+public class SobreNosotros extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     Toolbar toolbarNav;
-
-    private Button buttonApartar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_informacion_libro);
-
-        getWindow().setStatusBarColor(ContextCompat.getColor(InformacionLibro.this,R.color.color_principal));
-
+        setContentView(R.layout.activity_sobre_nosotros);
+        getWindow().setStatusBarColor(ContextCompat.getColor(SobreNosotros.this,R.color.color_principal));
         /*Inicializamos variables*/
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbarNav = findViewById(R.id.toolbar);
-        buttonApartar = (Button) findViewById(R.id.buttonApartar);
 
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -51,14 +36,6 @@ public class InformacionLibro extends AppCompatActivity implements NavigationVie
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbarNav,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
-        buttonApartar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Se ha apartado el libro", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        });
     }
 
     @Override

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_inicio"
+            android:title="Inicio"
+            android:icon="@drawable/icon_inicio"/>
         <item
             android:id="@+id/nav_perfil"
             android:title="Perfil"
@@ -18,6 +23,10 @@
             android:title="Mis Libros"
             android:icon="@drawable/icon_libros"/>
 
+        <item
+            android:id="@+id/nav_nosotros"
+            android:title="Nosotros"
+            android:icon="@drawable/icon_help"/>
     </group>
     <group android:checkableBehavior="single">
         <item
