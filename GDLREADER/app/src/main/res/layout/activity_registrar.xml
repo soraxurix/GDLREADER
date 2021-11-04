@@ -42,7 +42,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/style_border_text"
                 android:hint="Nombre completo"
-                android:inputType="textPassword" />
+                />
 
             <EditText
                 android:id="@+id/editTextCorreo"
@@ -52,25 +52,37 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/style_border_text"
-                android:hint="Correo electrónico" />
+                android:hint="Correo electrónico"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/editTextContraseña"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/editTextCorreo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/style_border_text"
+                android:hint="Contraseña"
+                android:inputType="textPassword" />
+
             <TextView
                 android:id="@+id/textcarrera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Carrera"
+                android:layout_below="@id/editTextContraseña"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
-                android:textSize="18dp"
+                android:text="Carrera"
                 android:textColor="@color/Registrarse"
-                android:layout_below="@id/editTextCorreo"
-                />
+                android:textSize="18dp" />
 
             <Spinner
                 android:id="@+id/spinner1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textcarrera"
-
+                android:textAlignment="center"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="55dp"
                 android:layout_marginTop="15dp" />
@@ -91,6 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:textAlignment="center"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/textsemestre" />
 

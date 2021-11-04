@@ -12,13 +12,15 @@
         android:src="@drawable/icon_person"></ImageView>
 
     <TextView
+        android:id="@+id/TextViewNombreA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Carlos Uriel Cruz Rodríguez"
+        android:text="@string/nombreHeader"
         android:textColor="#FFFFFF"
         android:textSize="20dp"></TextView>
 
     <TextView
+        android:id="@+id/TextViewNoControlA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="18150335"
