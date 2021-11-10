@@ -4,38 +4,48 @@
 
         <item
             android:id="@+id/nav_inicio"
-            android:title="Inicio"
+            android:title="@string/inicio"
             android:icon="@drawable/icon_inicio"/>
         <item
             android:id="@+id/nav_perfil"
-            android:title="Perfil"
+            android:title="@string/perfil"
             android:icon="@drawable/icon_person"/>
         <item
             android:id="@+id/nav_Busqueda"
-            android:title="Búsqueda"
+            android:title="@string/b_squeda"
             android:icon="@drawable/icon_busqueda"/>
         <item
             android:id="@+id/nav_tarjeta"
-            android:title="Mi Tarjeta"
+            android:title="@string/mi_tarjeta"
             android:icon="@drawable/icon_tarjeta"/>
         <item
             android:id="@+id/nav_libro"
-            android:title="Mis Libros"
+            android:title="@string/mis_libros"
             android:icon="@drawable/icon_libros"/>
 
         <item
             android:id="@+id/nav_nosotros"
-            android:title="Nosotros"
+            android:title="@string/nosotros"
             android:icon="@drawable/icon_help"/>
     </group>
     <group android:checkableBehavior="single">
         <item
-            android:title="Sesión">
+            android:title="@string/action_settings">
+
+            <menu>
+                <item
+                    android:id="@+id/nav_config"
+                    android:title="@string/action_settings"
+                    android:icon="@drawable/ic_baseline_settings_24"/>
+            </menu>
+        </item>
+        <item
+            android:title="@string/sesi_n">
 
             <menu>
                 <item
                     android:id="@+id/nav_cerrarsesion"
-                    android:title="Cerrar"
+                    android:title="@string/cerrar"
                     android:icon="@drawable/icon_cerrar_sesion"/>
             </menu>
         </item>

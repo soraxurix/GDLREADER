@@ -14,10 +14,19 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class PantallaPerfil extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -25,6 +34,11 @@ public class PantallaPerfil extends AppCompatActivity implements NavigationView.
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     Toolbar toolbarNav;
+
+    //Creamos la variable de sesion.
+    FirebaseAuth mAtuh;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +52,44 @@ public class PantallaPerfil extends AppCompatActivity implements NavigationView.
         navigationView = findViewById(R.id.nav_view);
         toolbarNav = findViewById(R.id.toolbar);
 
+        //Inicializar la base de datos
+        mAtuh = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        //Obtenemos el id de la sesion iniciada
+        String idAlumno = mAtuh.getCurrentUser().getUid();
+        mDatabase.child("Alumno").child(idAlumno).addValueEventListener(new ValueEventListener() {
+            @Override
+
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String nombre = dataSnapshot.child("Nombre").getValue().toString();
+                    String noControl = dataSnapshot.child("Nocontrol").getValue().toString();
+                    String imagen = dataSnapshot.child("Imagen").getValue().toString();
+                    /*mTextViewDataNombre.setText(nombre);*/
+                    /*Toast.makeText(PantallaPrincipal.this, "El nombre del usuario es: "+ nombre, Toast.LENGTH_SHORT).show()*/;
+
+                    NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                    View headerView = navigationView.getHeaderView(0);
+
+                    TextView navUsername = (TextView) headerView.findViewById(R.id.TextViewNombreA);
+                    navUsername.setText(nombre);
+
+                    TextView noControlView = (TextView) headerView.findViewById(R.id.TextViewNoControlA);
+                    noControlView.setText(noControl);
+
+                    ImageView imagena = (ImageView) headerView.findViewById(R.id.ImageViewPrincipal);
+
+                    Glide.with(PantallaPerfil.this).load(imagen).into(imagena);
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(PantallaPerfil.this, "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
         navigationView.setNavigationItemSelectedListener(this);
 
         /*Proceso para action bar*/
@@ -60,7 +112,7 @@ public class PantallaPerfil extends AppCompatActivity implements NavigationView.
             case R.id.nav_perfil:
                 /*Toast toast = Toast.makeText(getApplicationContext(), "Has dado click en perfil", Toast.LENGTH_SHORT);
                 toast.show();*/
-                intent = new Intent(this, PantallaPerfil.class);
+                intent = new Intent(PantallaPerfil.this, PantallaPerfil.class);
                 startActivity(intent);
                 break;
             case R.id.nav_Busqueda:
@@ -76,11 +128,19 @@ public class PantallaPerfil extends AppCompatActivity implements NavigationView.
                 startActivity(intent);
                 break;
             case R.id.nav_cerrarsesion:
+                mAtuh.signOut();
+                Toast.makeText(PantallaPerfil.this, "Sesion Finalizada", Toast.LENGTH_SHORT).show();
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.nav_nosotros:
                 intent = new Intent(this, SobreNosotros.class);
+                startActivity(intent);
+                break;
+
+            case R.id.nav_config:
+                intent = new Intent(this, Configuracion.class);
                 startActivity(intent);
                 break;
         }

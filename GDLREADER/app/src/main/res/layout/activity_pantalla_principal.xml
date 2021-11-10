@@ -11,7 +11,6 @@
 
 
 
-
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -41,173 +40,176 @@
             android:fillViewport="true">
 
             <!--Aquí irían nuestros estilos-->
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--Aquí van nuestras cosas-->
+            <TextView
+                android:id="@+id/textViewEncabezado"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:text="Libros Interesantes"
+                android:textAlignment="center"
+                android:textSize="30dp"
+                android:visibility="gone"
+                android:textColor="@color/color_principal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <!--Aquí van nuestras cosas-->
-                <TextView
-                    android:id="@+id/textViewEncabezado"
-                    android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/imagePortada1"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_below="@id/textViewEncabezado"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="36dp"
+                android:src="@drawable/portada1"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/textviewlibro1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/textViewEncabezado"
+                android:layout_marginTop="36dp"
+
+                android:layout_toEndOf="@id/imagePortada1"
+                android:text="MySQL and JSON"
+                android:textColor="@color/color_principal"
+                android:textSize="20dp"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/textAutor1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:textColor="#5C9BBD"
+                android:textSize="13dp"
+                android:text="David Stokes"
+                android:layout_below="@id/textviewlibro1"
+                android:layout_toEndOf="@id/imagePortada1"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/textGenero"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:textColor="#5C9BBD"
+                android:textSize="13dp"
+                android:text="Genero: Programación, TIC's"
+                android:layout_toEndOf="@id/imagePortada1"
+                android:layout_below="@id/textAutor1"
+                android:visibility="gone"/>
+
+            <!--Información del segundo libro-->
+            <ImageView
+                android:id="@+id/imagePortada2"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_below="@id/imagePortada1"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="36dp"
+                android:src="@drawable/portada2"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/textviewlibro2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="36dp"
+                android:text="Java For Begginers"
+                android:textColor="@color/color_principal"
+                android:textSize="20dp"
+                android:layout_toEndOf="@id/imagePortada2"
+                android:layout_below="@id/imagePortada1"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/textAutor2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/textviewlibro2"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/imagePortada2"
+                android:text="Autor: Josh Thompsons"
+                android:textColor="#5C9BBD"
+                android:textSize="13dp"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/textGenero2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:textColor="#5C9BBD"
+                android:textSize="13dp"
+                android:text="Genero: Programación, TIC's"
+                android:layout_toEndOf="@id/imagePortada2"
+                android:layout_below="@id/textAutor2"
+                android:visibility="gone"/>
+
+            <!--Aquí va el Tercer libro-->
+
+            <ImageView
+                android:id="@+id/imagePortada3"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_below="@id/imagePortada2"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="36dp"
+                android:src="@drawable/portada3"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/textviewlibro3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/imagePortada2"
+                android:layout_marginTop="36dp"
+                android:layout_toEndOf="@id/imagePortada3"
+                android:text="Organic Chemistry"
+                android:textColor="@color/color_principal"
+                android:textSize="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.02"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/textAutor3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/textviewlibro3"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/imagePortada3"
+                android:text="Autor: Ace Organic Chem"
+                android:textColor="#5C9BBD"
+                android:textSize="13dp"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/textGenero3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:textColor="#5C9BBD"
+                android:textSize="13dp"
+                android:text="Genero: Química"
+                android:layout_toEndOf="@id/imagePortada3"
+                android:layout_below="@id/textAutor3"
+                android:visibility="gone"/>
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Libros Interesantes"
-                    android:textAlignment="center"
-                    android:textSize="30dp"
-                    android:textColor="@color/color_principal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_centerVertical="true"
+                    android:id="@+id/shimmer"
+                    >
+                    <include layout="@layout/shimmer_layout" android:id="@+id/includeShimer"/>
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
-                <ImageView
-                    android:id="@+id/imagePortada1"
-                    android:layout_width="150dp"
-                    android:layout_height="200dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="36dp"
-                    android:src="@drawable/portada1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textViewEncabezado" />
-
-                <TextView
-                    android:id="@+id/textviewlibro1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="36dp"
-                    android:text="MySQL and JSON"
-                    android:textColor="@color/color_principal"
-                    android:textSize="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.02"
-                    app:layout_constraintStart_toEndOf="@id/imagePortada1"
-                    app:layout_constraintTop_toBottomOf="@id/textViewEncabezado" />
-
-                <TextView
-                    android:id="@+id/textAutor1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:textColor="#5C9BBD"
-                    android:textSize="13dp"
-                    android:text="David Stokes"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.02"
-                    app:layout_constraintStart_toEndOf="@id/imagePortada1"
-                    app:layout_constraintTop_toBottomOf="@id/textviewlibro1" />
-                <TextView
-                    android:id="@+id/textGenero"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:textColor="#5C9BBD"
-                    android:textSize="13dp"
-                    android:text="Genero: Programación, TIC's"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.02"
-                    app:layout_constraintStart_toEndOf="@id/imagePortada1"
-                    app:layout_constraintTop_toBottomOf="@id/textAutor1" />
-
-                <!--Información del segundo libro-->
-                <ImageView
-                    android:id="@+id/imagePortada2"
-                    android:layout_width="150dp"
-                    android:layout_height="200dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="36dp"
-                    android:src="@drawable/portada2"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/imagePortada1" />
-
-                <TextView
-                    android:id="@+id/textviewlibro2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="36dp"
-                    android:text="Java For Begginers"
-                    android:textColor="@color/color_principal"
-                    android:textSize="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.02"
-                    app:layout_constraintStart_toEndOf="@id/imagePortada2"
-                    app:layout_constraintTop_toBottomOf="@id/imagePortada1" />
-
-                <TextView
-                    android:id="@+id/textAutor2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:textColor="#5C9BBD"
-                    android:textSize="13dp"
-                    android:text="Autor: Josh Thompsons"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.02"
-                    app:layout_constraintStart_toEndOf="@id/imagePortada1"
-                    app:layout_constraintTop_toBottomOf="@id/textviewlibro2" />
-                <TextView
-                    android:id="@+id/textGenero2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:textColor="#5C9BBD"
-                    android:textSize="13dp"
-                    android:text="Genero: Programación, TIC's"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.02"
-                    app:layout_constraintStart_toEndOf="@id/imagePortada1"
-                    app:layout_constraintTop_toBottomOf="@id/textAutor2" />
-
-                <!--Aquí va el Tercer libro-->
-
-                <ImageView
-                    android:id="@+id/imagePortada3"
-                    android:layout_width="150dp"
-                    android:layout_height="200dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="36dp"
-                    android:src="@drawable/portada3"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/imagePortada2" />
-
-                <TextView
-                    android:id="@+id/textviewlibro3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="36dp"
-                    android:layout_marginBottom="25dp"
-                    android:text="Organic Chemistry"
-                    android:textColor="@color/color_principal"
-                    android:textSize="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.02"
-                    app:layout_constraintStart_toEndOf="@id/imagePortada2"
-                    app:layout_constraintTop_toBottomOf="@id/imagePortada2" />
-
-                <TextView
-                    android:id="@+id/textAutor3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:textColor="#5C9BBD"
-                    android:textSize="13dp"
-                    android:text="Autor: Ace Organic Chem"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.02"
-                    app:layout_constraintStart_toEndOf="@id/imagePortada3"
-                    app:layout_constraintTop_toBottomOf="@id/textviewlibro3" />
-                <TextView
-                    android:id="@+id/textGenero3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:textColor="#5C9BBD"
-                    android:textSize="13dp"
-                    android:text="Genero: Química"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.02"
-                    app:layout_constraintStart_toEndOf="@id/imagePortada3"
-                    app:layout_constraintTop_toBottomOf="@id/textAutor3" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
         </ScrollView>
+
 
 
 

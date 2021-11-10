@@ -2,24 +2,28 @@ package com.example.gdlreader;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.Toolbar;
-
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.Resource;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,37 +32,58 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class PantallaMisLibros extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Configuracion extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    TextView Idioma, IdiomaBoton;
+    boolean idioma_seleccionado=true;
+    Context context;
+    Resources resources;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     Toolbar toolbarNav;
+
     //Creamos la variable de sesion.
     FirebaseAuth mAtuh;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference mDatabase;
 
-    private ImageView imageView1;
-    private ImageView imageView2;
-    private ImageView imageView3;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pantalla_mis_libros);
-
-        getWindow().setStatusBarColor(ContextCompat.getColor(PantallaMisLibros.this,R.color.color_principal));
+        setContentView(R.layout.activity_configuracion);
 
         /*Inicializamos variables*/
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbarNav = findViewById(R.id.toolbar);
-        imageView1 =  (ImageView) findViewById(R.id.imagePortada1);
-        imageView2 =  (ImageView) findViewById(R.id.imagePortada2);
-        imageView3 =  (ImageView) findViewById(R.id.imagePortada3);
+
+        navigationView.setNavigationItemSelectedListener(this);
+
         //Inicializar la base de datos
         mAtuh = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        /*Proceso para action bar*/
+        navigationView.bringToFront();
+        setSupportActionBar(toolbarNav);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbarNav,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        /*Aquí se realiza el porceso para los idiomas*/
+        IdiomaBoton = (TextView) findViewById(R.id.TextViewIdioma);
+        Idioma= (TextView) findViewById(R.id.TextViewIdiomaBoton);
+
+        Idioma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent languageIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+
+                startActivity(languageIntent);
+            }
+        });
+        getWindow().setStatusBarColor(ContextCompat.getColor(Configuracion.this,R.color.color_principal));
         //Obtenemos el id de la sesion iniciada
         String idAlumno = mAtuh.getCurrentUser().getUid();
         mDatabase.child("Alumno").child(idAlumno).addValueEventListener(new ValueEventListener() {
@@ -83,7 +108,7 @@ public class PantallaMisLibros extends AppCompatActivity implements NavigationVi
 
                     ImageView imagena = (ImageView) headerView.findViewById(R.id.ImageViewPrincipal);
 
-                    Glide.with(PantallaMisLibros.this).load(imagen).into(imagena);
+                    Glide.with(Configuracion.this).load(imagen).into(imagena);
 
 
                 }
@@ -91,43 +116,11 @@ public class PantallaMisLibros extends AppCompatActivity implements NavigationVi
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(PantallaMisLibros.this, "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Configuracion.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
-
-        imageView1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openInformacionLibros();
-            }
-        });
-
-        imageView2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openInformacionLibros();
-            }
-        });
-
-        imageView3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openInformacionLibros();
-            }
-        });
-        navigationView.setNavigationItemSelectedListener(this);
-
-        /*Proceso para action bar*/
-        navigationView.bringToFront();
-        setSupportActionBar(toolbarNav);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbarNav,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
     }
-    public void openInformacionLibros(){
-        Intent intent = new Intent(this, InformacionLibro.class);
-        startActivity(intent);
-    }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -140,7 +133,7 @@ public class PantallaMisLibros extends AppCompatActivity implements NavigationVi
             case R.id.nav_perfil:
                 /*Toast toast = Toast.makeText(getApplicationContext(), "Has dado click en perfil", Toast.LENGTH_SHORT);
                 toast.show();*/
-                intent = new Intent(PantallaMisLibros.this, PantallaPerfil.class);
+                intent = new Intent(Configuracion.this, PantallaPerfil.class);
                 startActivity(intent);
                 break;
             case R.id.nav_Busqueda:
@@ -157,7 +150,7 @@ public class PantallaMisLibros extends AppCompatActivity implements NavigationVi
                 break;
             case R.id.nav_cerrarsesion:
                 mAtuh.signOut();
-                Toast.makeText(PantallaMisLibros.this, "Sesion Finalizada", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Configuracion.this, "Sesion Finalizada", Toast.LENGTH_SHORT).show();
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 finish();

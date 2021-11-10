@@ -6,8 +6,9 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
-
+    <string name="action_settings">Configuración</string>
+    <string name= "seleccionaIdioma">Español</string>
+    <string name="idioma">Idioma</string>
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
@@ -15,7 +16,18 @@
     <string name="datos_principales_libro">Creado por: David Stokes.\n\nEditorial: McGraw-Hill Education; 1er edición (6 Junio 2018) \n\nIdioma: Inglés. \n\nTapa blanda 128 páginas. \n\nPeso del Artículo 5.8 onzas.\n\nDimensiones 6 x 0.25 x 8.75 pulgadas.</string>
     <string name="sipnosis_libros">This hands-on guide teaches, step by step, how to use JavaScript Object Notation (JSON) with MySQL. Written by a MySQL Community Manager for Oracle, MySQL and JSON: A Practical Programming Guide shows how to quickly get started using JSON with MySQL and clearly explains the latest tools and functions. All content is based on the author’s years of interaction with MySQL professionals. Throughout, real-world examples and sample code guide you through the syntax and application of each method. You will get in-depth coverage of programming with the MySQL Document Store.</string>
     <string name="texto_sobre_nosotros">Nosotros somos un equipo de estudiantes que se están encargando del desarrollo de la aplicación para que los alumnos del instutuo tecnológico de aguascalientes puedan acceder directamente a la existencia de libros que disponga el centro de información del instituto.</string>
-    <string name= "nombreHeader"> Carlos Uriel </string>
+    <string name="nombreHeader"> Carlos Uriel </string>
+    <string name="inicio">Inicio</string>
+    <string name="perfil">Perfil</string>
+    <string name="b_squeda">Búsqueda</string>
+    <string name="mi_tarjeta">Mi Tarjeta</string>
+    <string name="mis_libros">Mis Libros</string>
+    <string name="nosotros">Nosotros</string>
+    <string name="cerrar">Cerrar</string>
+    <string name="sesi_n">Sesión</string>
+    <string name="telefonoContacto">Teléfono: 4491543007:</string>
+    <string name="contactanos">Contáctanos:</string>
+    <string name="qui_nes_somos">¿Quiénes somos?</string>
 
     <string-array name="Carreras">
         <item>Administración</item>

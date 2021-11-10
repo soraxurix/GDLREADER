@@ -47,7 +47,7 @@
                     android:id="@+id/textViewTitulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Quiénes somos?"
+                    android:text="@string/qui_nes_somos"
                     android:textAlignment="center"
                     android:textColor="@color/color_principal"
                     android:textSize="30dp" />
@@ -62,12 +62,45 @@
 
 
                 <com.codesgood.views.JustifiedTextView
+                    android:id="@+id/TextoJustificadoSobreNosotros"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/logoPerfil"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/style_border_text"
                     android:text="@string/texto_sobre_nosotros"
+                    android:textColor="@color/color_principal"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/textviewContacto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/TextoJustificadoSobreNosotros"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/contactanos"
+                    android:textAlignment="center"
+                    android:textColor="@color/color_principal"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/telefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textviewContacto"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/telefonoContacto"
+                    android:textAlignment="center"
+                    android:textColor="@color/color_principal"
+                    android:textSize="20dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/telefono"
+                    android:layout_marginTop="10dp"
+                    android:text="Email: gdlreade@gmail.com"
+                    android:textAlignment="center"
                     android:textColor="@color/color_principal"
                     android:textSize="20dp" />
 

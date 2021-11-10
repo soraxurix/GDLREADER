@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GDLREADER</string>
+    <string name="title_activity_patalla_prueba">PatallaPrueba</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name= "seleccionaIdioma">English</string>
+    <string name="idioma">Language</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="mushoku_tensei">Autor: David Stokes</string>
+    <string name="datos_principales_libro">Creado por: David Stokes.\n\nEditorial: McGraw-Hill Education; 1er edición (6 Junio 2018) \n\nIdioma: Inglés. \n\nTapa blanda 128 páginas. \n\nPeso del Artículo 5.8 onzas.\n\nDimensiones 6 x 0.25 x 8.75 pulgadas.</string>
+    <string name="sipnosis_libros">This hands-on guide teaches, step by step, how to use JavaScript Object Notation (JSON) with MySQL. Written by a MySQL Community Manager for Oracle, MySQL and JSON: A Practical Programming Guide shows how to quickly get started using JSON with MySQL and clearly explains the latest tools and functions. All content is based on the author’s years of interaction with MySQL professionals. Throughout, real-world examples and sample code guide you through the syntax and application of each method. You will get in-depth coverage of programming with the MySQL Document Store.</string>
+    <string name="texto_sobre_nosotros">We are a team of students who are in charge of the development of the application so that the students of the Aguascalientes technological institute can directly access the existence of books available at the institute\'s information center.</string>
+    <string name="nombreHeader"> Carlos Uriel </string>
+    <string name="inicio">Home</string>
+    <string name="perfil">Profile</string>
+    <string name="b_squeda">Search</string>
+    <string name="mi_tarjeta">My card</string>
+    <string name="mis_libros">My books</string>
+    <string name="nosotros">About us</string>
+    <string name="cerrar">Log out</string>
+    <string name="sesi_n">Session</string>
+    <string name="telefonoContacto">Phone: 4491543007</string>
+    <string name="contactanos">Contact us:</string>
+    <string name="qui_nes_somos">Who are we?</string>
+
+</resources>

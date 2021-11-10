@@ -107,17 +107,40 @@
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/textsemestre" />
 
+
+           <!-- <Button
+                android:id="@+id/botonimagenPerfil"
+                android:layout_below="@+id/spinner2"
+                android:src="@drawable/icon_help"
+                android:layout_width="280dp"
+                android:layout_height="60dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="35dp"
+                android:background="#28A5E8"
+                android:text="Cargar Imagen"
+                android:textColor="#FFF"
+                android:textSize="18sp"/>
+-->
+            <ImageView
+                android:id="@+id/imagenPerfil"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_below="@+id/spinner2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/foto_perfil" />
+
             <Button
                 android:id="@+id/buttonInicarSesion"
                 android:layout_width="280dp"
                 android:layout_height="60dp"
-                android:layout_below="@id/spinner2"
+                android:layout_below="@id/imagenPerfil"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="35dp"
                 android:background="#28A5E8"
                 android:text="Registrarse"
                 android:textColor="#FFF"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
         </RelativeLayout>
     </ScrollView>

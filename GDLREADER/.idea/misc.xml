@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/drawable/icon_drop.xml" value="0.31025641025641026" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/drawable/icon_regresar.xml" value="0.3611111111111111" />
+        <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/drawable/shape_background.xml" value="0.31025641025641026" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/drawable/splash_screen.xml" value="0.3611111111111111" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/drawable/style_border_text.xml" value="0.34814814814814815" />
+        <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/activity_configuracion.xml" value="0.297008547008547" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/activity_genero_libros.xml" value="0.30085470085470084" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/activity_informacion_libro.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
@@ -22,6 +25,7 @@
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/fragment_slideshow.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/header.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/main_toolbar.xml" value="0.17654508611955422" />
+        <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/shimmer_layout.xml" value="0.21" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/menu/activity_main_drawer.xml" value="0.35104166666666664" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/menu/main_menu.xml" value="0.33" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.20811965811965813" />

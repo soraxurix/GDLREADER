@@ -1,24 +1,44 @@
 package com.example.gdlreader;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Patterns;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.gdlreader.databinding.ActivityMainBinding;
 import com.example.gdlreader.ui.Registro;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
@@ -29,18 +49,37 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.auth.FirebaseAuthCredentialsProvider;
 import com.google.firebase.firestore.auth.User;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.regex.Pattern;
+
+import id.zelory.compressor.Compressor;
 
 public class Registrar extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Button button;
+
     //Definicion de variables
     EditText NoControlA, NombreA, CorreoA, ContraseñaA;
+    ImageView FotoA;
     Spinner CarreraA, SemestreA;
+    TextView   tvUrl;
+
+
+    ActivityResultLauncher<String> mGetContent;
 
     String nocontrol ="";
     String nombre ="";
@@ -48,12 +87,18 @@ public class Registrar extends AppCompatActivity implements AdapterView.OnItemSe
     String contraseña ="";
     String carrera ="";
     String semestre ="";
+    String FotoaA="";
 
     //Variables para la base de datos.
     FirebaseAuth mAtuh;
     FirebaseDatabase firebaseDatabase;
+    FirebaseStorage storage;
     DatabaseReference mDatabase;
 
+    StorageReference storageReference;
+    Bitmap thumb_bitmap = null;
+    ProgressDialog cargando;
+    Uri imageUrl, resultUri;
 
 
     @Override
@@ -61,10 +106,21 @@ public class Registrar extends AppCompatActivity implements AdapterView.OnItemSe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar);
 
+        //Este metodo si funciona
+        mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
+            @Override
+            public void onActivityResult(Uri result) {
+                FotoA.setImageURI(result);
+                imageUrl=result;
+            }
+        });
+
+        //Instancias las variables de firebase
         mAtuh = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        storage =FirebaseStorage.getInstance();
 
-        //Igualamos la variable de sesion
+
 
         //Cambiar color a la barra del telefono
         getWindow().setStatusBarColor(ContextCompat.getColor(Registrar.this,R.color.color_principal));
@@ -92,9 +148,8 @@ public class Registrar extends AppCompatActivity implements AdapterView.OnItemSe
         ContraseñaA = (EditText) findViewById(R.id.editTextContraseña);
         CarreraA = (Spinner) findViewById(R.id.spinner1);
         SemestreA = (Spinner) findViewById(R.id.spinner2);
-
-        //Inicializar la base de datos
-        //inicializarFirebase();
+        FotoA = (ImageView) findViewById(R.id.imagenPerfil);
+        tvUrl = (TextView) findViewById(R.id.textViewEncabezado);
 
         //Boton
         button = (Button) findViewById(R.id.buttonInicarSesion);
@@ -108,6 +163,7 @@ public class Registrar extends AppCompatActivity implements AdapterView.OnItemSe
                  contraseña = ContraseñaA.getText().toString();
                  carrera = CarreraA.getSelectedItem().toString();
                  semestre = SemestreA.getSelectedItem().toString();
+                 FotoaA =imageUrl.toString();
 
 
                 if(nocontrol.equals("") || nombre.equals("") ||correo.equals("") || contraseña.equals("") || contraseña.length()<6 || !validarEmail(correo) ){
@@ -119,14 +175,22 @@ public class Registrar extends AppCompatActivity implements AdapterView.OnItemSe
 
             }
         });
-    }
 
-    /*private void inicializarFirebase() {
-        FirebaseApp.initializeApp(this);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
-        mAtuh = FirebaseAuth.getInstance();
-    }*/
+        //Creamos el metodo para subir la imagen dando click en la imagen
+        FotoA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                mGetContent.launch("image/*");
+
+
+
+            }
+        });
+
+    }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //Metodo para limpiar los text
     private void limpiar() {
@@ -157,19 +221,12 @@ public class Registrar extends AppCompatActivity implements AdapterView.OnItemSe
             ContraseñaA.setError("La contraseña debe tener 6 más caracteres");
         }
 
-        /*else if(carrera.equals("")){
-            CarreraA.setError("Campo vacio");
-        }
-        else if(semestre.equals("")){
-            SemestreA.setError("Campo vacio");
-        }*/
 
     }
 
     //Con este metodo se guarda el correo y la contraseña en la parte de autenticacion en firebase y mostramos un mensaje de que los datos estan guardados.
     public void Mensaje (){
-        /*String correo = CorreoA.getText().toString();
-        String contraseña = ContraseñaA.getText().toString();*/
+
         mAtuh.createUserWithEmailAndPassword(correo,contraseña).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -183,6 +240,29 @@ public class Registrar extends AppCompatActivity implements AdapterView.OnItemSe
                     map.put("Carrera",carrera);
                     map.put("Semestre",semestre);
 
+
+                    //Funciona
+                    if (imageUrl!= null){
+                        StorageReference reference = storage.getReference().child("Imagenes/"+ UUID.randomUUID().toString());
+                        String PruebaMensaje = reference.getPath().toString();
+                        Toast.makeText(Registrar.this,PruebaMensaje,Toast.LENGTH_SHORT).show();
+
+                        reference.putFile(imageUrl).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                if(task.isSuccessful()){
+
+                                    Toast.makeText(Registrar.this,"Imagen subida correctamente",Toast.LENGTH_SHORT).show();
+
+                                }
+                                else{
+                                    Toast.makeText(Registrar.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                    map.put("Imagen",FotoaA);
+
                     String id = mAtuh.getCurrentUser().getUid();
 
                     mDatabase.child("Alumno").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -190,7 +270,7 @@ public class Registrar extends AppCompatActivity implements AdapterView.OnItemSe
                         public void onComplete(@NonNull Task<Void> task2) {
                             if(task2.isSuccessful()){
                                 limpiar();
-                                startActivity(new Intent( Registrar.this, MainActivity.class));
+                                /*startActivity(new Intent( Registrar.this, MainActivity.class));*/
                                 finish();
                             }
                             else{
@@ -206,6 +286,8 @@ public class Registrar extends AppCompatActivity implements AdapterView.OnItemSe
         });
 
     }
+
+
     private boolean validarEmail(String email) {
         Pattern pattern = Patterns.EMAIL_ADDRESS;
         return pattern.matcher(email).matches();
@@ -221,5 +303,23 @@ public class Registrar extends AppCompatActivity implements AdapterView.OnItemSe
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
-
+    /*//Metodo para el forresult
+    private ActivityResultLauncher<Intent>galleryActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        //imagen picked
+                        //get url of image
+                        Intent data = result.getData();
+                        imageUrl = data.getData();
+                        FotoA.setImageURI(imageUrl);
+                    }
+                    else{
+                        Toast.makeText(Registrar.this,FotoA.toString(),Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+    );*/
 }

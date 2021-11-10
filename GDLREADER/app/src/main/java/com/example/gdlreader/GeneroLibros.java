@@ -15,11 +15,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class GeneroLibros extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -27,6 +35,11 @@ public class GeneroLibros extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     Toolbar toolbarNav;
+
+    //Creamos la variable de sesion.
+    FirebaseAuth mAtuh;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference mDatabase;
 
     private ImageView imageView1;
     private ImageView imageView2;
@@ -47,6 +60,9 @@ public class GeneroLibros extends AppCompatActivity implements NavigationView.On
         imageView2 =  (ImageView) findViewById(R.id.image_portada2);
         /*imageView3 =  (ImageView) findViewById(R.id.imagePortada3);*/
 
+        //Inicializar la base de datos
+        mAtuh = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         imageView1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +93,42 @@ public class GeneroLibros extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        /*Evento para el botón de apartar*/
+
+        //Obtenemos el id de la sesion iniciada
+        String idAlumno = mAtuh.getCurrentUser().getUid();
+        mDatabase.child("Alumno").child(idAlumno).addValueEventListener(new ValueEventListener() {
+            @Override
+
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String nombre = dataSnapshot.child("Nombre").getValue().toString();
+                    String noControl = dataSnapshot.child("Nocontrol").getValue().toString();
+                    String imagen = dataSnapshot.child("Imagen").getValue().toString();
+                    /*mTextViewDataNombre.setText(nombre);*/
+                    /*Toast.makeText(PantallaPrincipal.this, "El nombre del usuario es: "+ nombre, Toast.LENGTH_SHORT).show()*/;
+
+                    NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                    View headerView = navigationView.getHeaderView(0);
+
+                    TextView navUsername = (TextView) headerView.findViewById(R.id.TextViewNombreA);
+                    navUsername.setText(nombre);
+
+                    TextView noControlView = (TextView) headerView.findViewById(R.id.TextViewNoControlA);
+                    noControlView.setText(noControl);
+
+                    ImageView imagena = (ImageView) headerView.findViewById(R.id.ImageViewPrincipal);
+
+                    Glide.with(GeneroLibros.this).load(imagen).into(imagena);
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(GeneroLibros.this, "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void openInformacionLibros(){
@@ -96,7 +147,7 @@ public class GeneroLibros extends AppCompatActivity implements NavigationView.On
             case R.id.nav_perfil:
                 /*Toast toast = Toast.makeText(getApplicationContext(), "Has dado click en perfil", Toast.LENGTH_SHORT);
                 toast.show();*/
-                intent = new Intent(this, PantallaPerfil.class);
+                intent = new Intent(GeneroLibros.this, PantallaPerfil.class);
                 startActivity(intent);
                 break;
             case R.id.nav_Busqueda:
@@ -112,11 +163,19 @@ public class GeneroLibros extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 break;
             case R.id.nav_cerrarsesion:
+                mAtuh.signOut();
+                Toast.makeText(GeneroLibros.this, "Sesion Finalizada", Toast.LENGTH_SHORT).show();
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.nav_nosotros:
                 intent = new Intent(this, SobreNosotros.class);
+                startActivity(intent);
+                break;
+
+            case R.id.nav_config:
+                intent = new Intent(this, Configuracion.class);
                 startActivity(intent);
                 break;
         }

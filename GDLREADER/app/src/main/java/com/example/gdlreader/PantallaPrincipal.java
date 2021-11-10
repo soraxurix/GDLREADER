@@ -7,19 +7,20 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.Display;
-import android.view.Gravity;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.gdlreader.ui.Registro;
-import com.google.firebase.FirebaseApp;
+import com.bumptech.glide.Glide;
+import com.facebook.shimmer.Shimmer;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,11 +37,16 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     Toolbar toolbarNav;
+    ShimmerFrameLayout layout;
+
+    Handler handler = new Handler();
 
 
     private ImageView imageView1;
     private ImageView imageView2;
     private ImageView imageView3;
+    private TextView textView1, textView2, textView3, textView4, textView5, textView6, textView7 , textView8, textView9, textviewEncabezado;
+
     //Creamos la variable para mostrar los datos de la bd
     private TextView mTextViewDataNombre;
     private TextView mTextViewDataNocontrol;
@@ -55,6 +61,8 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Contexto
+
         setContentView(R.layout.activity_pantalla_principal);
         /*Inicializamos variables*/
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -63,6 +71,7 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
         imageView1 =  (ImageView) findViewById(R.id.imagePortada1);
         imageView2 =  (ImageView) findViewById(R.id.imagePortada2);
         imageView3 =  (ImageView) findViewById(R.id.imagePortada3);
+        ShimmerProceso();
 
         //Inicializar la base de datos
         mAtuh = FirebaseAuth.getInstance();
@@ -82,6 +91,7 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
                 if (dataSnapshot.exists()) {
                     String nombre = dataSnapshot.child("Nombre").getValue().toString();
                     String noControl = dataSnapshot.child("Nocontrol").getValue().toString();
+                    String imagen = dataSnapshot.child("Imagen").getValue().toString();
                     /*mTextViewDataNombre.setText(nombre);*/
                     /*Toast.makeText(PantallaPrincipal.this, "El nombre del usuario es: "+ nombre, Toast.LENGTH_SHORT).show()*/;
 
@@ -93,6 +103,12 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
 
                     TextView noControlView = (TextView) headerView.findViewById(R.id.TextViewNoControlA);
                     noControlView.setText(noControl);
+
+                    ImageView imagena = (ImageView) headerView.findViewById(R.id.ImageViewPrincipal);
+
+                    Glide.with(PantallaPrincipal.this).load(imagen).into(imagena);
+
+
                 }
             }
 
@@ -142,17 +158,50 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
                 //Sacamos los valores
 
 
-        //TomarDatos();
+
 
     }
 
-    /*private void inicializarFirebase() {
-        FirebaseApp.initializeApp(this);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
-        alumnoReference = firebaseDatabase.getReference("Alumno");
-        mAuth = FirebaseAuth.getInstance();
-    }*/
+    public void ShimmerProceso(){
+        layout = (ShimmerFrameLayout) findViewById(R.id.shimmer);
+        textView1 = (TextView) findViewById(R.id.textviewlibro1);
+        textView2 = (TextView) findViewById(R.id.textviewlibro2);
+        textView3 = (TextView) findViewById(R.id.textviewlibro3);
+
+        textView4 = (TextView) findViewById(R.id.textAutor1);
+        textView5 = (TextView) findViewById(R.id.textAutor2);
+        textView6 = (TextView) findViewById(R.id.textAutor3);
+
+        textView7 = (TextView) findViewById(R.id.textGenero);
+        textView8 = (TextView) findViewById(R.id.textGenero2);
+        textView9 = (TextView) findViewById(R.id.textGenero3);
+
+        textviewEncabezado = (TextView)findViewById(R.id.textViewEncabezado);
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                layout.stopShimmer();
+                layout.hideShimmer();
+                layout.setVisibility(View.GONE);
+
+
+                imageView1.setVisibility(View.VISIBLE);
+                imageView2.setVisibility(View.VISIBLE);
+                imageView3.setVisibility(View.VISIBLE);
+                textView1.setVisibility(View.VISIBLE);
+                textView2.setVisibility(View.VISIBLE);
+                textView3.setVisibility(View.VISIBLE);
+                textView4.setVisibility(View.VISIBLE);
+                textView5.setVisibility(View.VISIBLE);
+                textView6.setVisibility(View.VISIBLE);
+                textView7.setVisibility(View.VISIBLE);
+                textView8.setVisibility(View.VISIBLE);
+                textView9.setVisibility(View.VISIBLE);
+                textviewEncabezado.setVisibility(View.VISIBLE);
+            }
+        },4000);
+    }
 
     public void openInformacionLibros(){
         Intent intent = new Intent(this, InformacionLibro.class);
@@ -206,28 +255,13 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
                 intent = new Intent(this, SobreNosotros.class);
                 startActivity(intent);
                 break;
+
+            case R.id.nav_config:
+                intent = new Intent(this, Configuracion.class);
+                startActivity(intent);
+                break;
         }
         return true;
-    }
-
-    private void TomarDatos(){
-
-
-        /*databaseReference.child("Alumno").addValueEventListener(new ValueEventListener() {
-            @Override
-
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    String nombre = dataSnapshot.child("nombre").getValue().toString();
-                    mTextViewDataNombre.setText(nombre);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(PantallaPrincipal.this, "Error", Toast.LENGTH_SHORT).show();
-            }
-        });*/
     }
 
 }
