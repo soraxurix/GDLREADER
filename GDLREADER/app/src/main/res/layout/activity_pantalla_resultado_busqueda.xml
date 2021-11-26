@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PantallaMisLibros"
+    tools:context=".PantallaResultadoBusqueda"
     android:id="@+id/drawer_layout"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
@@ -41,7 +41,7 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-            <!--Aquí irían nuestros estilos-->
+                <!--Aquí irían nuestros estilos-->
                 <TextView
                     android:id="@+id/textviewEncabezado"
                     android:layout_width="match_parent"
@@ -71,13 +71,6 @@
             </RelativeLayout>
         </ScrollView>
 
-
-
     </LinearLayout>
-
-
-
-
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

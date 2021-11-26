@@ -1,3 +1,4 @@
+
 package com.example.gdlreader;
 
 import androidx.activity.result.ActivityResult;
@@ -64,6 +65,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
@@ -88,6 +90,11 @@ public class Registrar extends AppCompatActivity implements AdapterView.OnItemSe
     String carrera ="";
     String semestre ="";
     String FotoaA="";
+    //Variables para el numero random
+    Random rand = new Random();
+    int abcd = rand.nextInt(100000000);
+
+    String Tarjeta= String.valueOf(abcd);
 
     //Variables para la base de datos.
     FirebaseAuth mAtuh;
@@ -157,20 +164,18 @@ public class Registrar extends AppCompatActivity implements AdapterView.OnItemSe
             @Override
             public void onClick(View view) {
                 //Agregar.Trim() Para eleminar los espacios que hay de más
-                 nocontrol = NoControlA.getText().toString();
-                 nombre = NombreA.getText().toString();
-                 correo = CorreoA.getText().toString();
-                 contraseña = ContraseñaA.getText().toString();
-                 carrera = CarreraA.getSelectedItem().toString();
-                 semestre = SemestreA.getSelectedItem().toString();
-                 FotoaA =imageUrl.toString();
-
-
+                nocontrol = NoControlA.getText().toString();
+                nombre = NombreA.getText().toString();
+                correo = CorreoA.getText().toString();
+                contraseña = ContraseñaA.getText().toString();
+                carrera = CarreraA.getSelectedItem().toString();
+                semestre = SemestreA.getSelectedItem().toString();
+                FotoaA =imageUrl.toString();
                 if(nocontrol.equals("") || nombre.equals("") ||correo.equals("") || contraseña.equals("") || contraseña.length()<6 || !validarEmail(correo) ){
                     validacion();
                 }
                 else{
-                        Mensaje();
+                    Mensaje();
                 }
 
             }
@@ -200,6 +205,7 @@ public class Registrar extends AppCompatActivity implements AdapterView.OnItemSe
         ContraseñaA.setText("");
     }
 
+
     //Metodo para validar los text
     private void validacion() {
         if(nocontrol.equals("")){
@@ -211,7 +217,7 @@ public class Registrar extends AppCompatActivity implements AdapterView.OnItemSe
         else if(correo.equals("")){
             CorreoA.setError("Campo vacio");
         }
-       else if (!validarEmail(correo)){
+        else if (!validarEmail(correo)){
             CorreoA.setError("Email no válido");
         }
         else if(contraseña.equals("")){
@@ -239,6 +245,7 @@ public class Registrar extends AppCompatActivity implements AdapterView.OnItemSe
                     map.put("Contraseña",contraseña);
                     map.put("Carrera",carrera);
                     map.put("Semestre",semestre);
+                    map.put("Tarjeta",Tarjeta);
 
 
                     //Funciona
@@ -270,7 +277,6 @@ public class Registrar extends AppCompatActivity implements AdapterView.OnItemSe
                         public void onComplete(@NonNull Task<Void> task2) {
                             if(task2.isSuccessful()){
                                 limpiar();
-                                /*startActivity(new Intent( Registrar.this, MainActivity.class));*/
                                 finish();
                             }
                             else{
@@ -303,23 +309,4 @@ public class Registrar extends AppCompatActivity implements AdapterView.OnItemSe
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
-    /*//Metodo para el forresult
-    private ActivityResultLauncher<Intent>galleryActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        //imagen picked
-                        //get url of image
-                        Intent data = result.getData();
-                        imageUrl = data.getData();
-                        FotoA.setImageURI(imageUrl);
-                    }
-                    else{
-                        Toast.makeText(Registrar.this,FotoA.toString(),Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-    );*/
 }

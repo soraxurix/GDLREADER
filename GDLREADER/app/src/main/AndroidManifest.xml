@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GDLREADER">
         <activity
+            android:name=".PantallaResultadoBusqueda"
+            android:exported="false" />
+        <activity
             android:name=".Configuracion"
             android:exported="false" />
         <activity

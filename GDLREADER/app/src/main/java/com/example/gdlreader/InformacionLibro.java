@@ -21,13 +21,20 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 public class InformacionLibro extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -39,8 +46,9 @@ public class InformacionLibro extends AppCompatActivity implements NavigationVie
     //Creamos la variable de sesion.
     FirebaseAuth mAtuh;
     FirebaseDatabase firebaseDatabase;
-    DatabaseReference mDatabase;
-
+    DatabaseReference mDatabase, mDatabaseLibro, mDatabaseLibroApartado;
+    Random rand = new Random();
+    int idrandom = rand.nextInt(100000000);
     private Button buttonApartar;
 
     @Override
@@ -68,8 +76,63 @@ public class InformacionLibro extends AppCompatActivity implements NavigationVie
         //Inicializar la base de datos
         mAtuh = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabaseLibro = FirebaseDatabase.getInstance().getReference();
+        mDatabaseLibroApartado = FirebaseDatabase.getInstance().getReference("Apartado");
+
+
+
         //Obtenemos el id de la sesion iniciada
         String idAlumno = mAtuh.getCurrentUser().getUid();
+
+        String idLibro = getIntent().getStringExtra("keyLibro");
+        //Toast.makeText(InformacionLibro.this, idLibro, Toast.LENGTH_SHORT).show();
+
+        mDatabaseLibro.child("Libro").child(idLibro).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String tituloLibro = snapshot.child("Titulo").getValue().toString();
+                //Toast.makeText(InformacionLibro.this, idLibro, Toast.LENGTH_SHORT).show();
+                String autorLibro = snapshot.child("Autor").getValue().toString();
+                String editorialLibro = snapshot.child("Editorial").getValue().toString();
+                String idiomaLibro = snapshot.child("Idioma").getValue().toString();
+                String paginasLibro = snapshot.child("Paginas").getValue().toString();
+                String dimensionesLibro = snapshot.child("Dimensiones").getValue().toString();
+                String sinopsisLibro = snapshot.child("Sinopsis").getValue().toString();
+                String imagenLibro = snapshot.child("Url").getValue().toString();
+
+
+                //String imagenLibro = snapshot.child("Url").getValue().toString();
+                TextView TitutloLibro = (TextView) findViewById(R.id.InfoTitulo);
+                TitutloLibro.setText(tituloLibro);
+
+                TextView AutorLibro = (TextView) findViewById(R.id.InfoAutor);
+                AutorLibro.setText(autorLibro);
+
+                TextView EditorialLibro = (TextView) findViewById(R.id.InfoEditorial);
+                EditorialLibro.setText(editorialLibro);
+
+                TextView IdiomaLibro = (TextView) findViewById(R.id.InfoIdioma);
+                IdiomaLibro.setText(idiomaLibro);
+
+                TextView PaginasLibro = (TextView) findViewById(R.id.InfoPaginas);
+                PaginasLibro.setText(paginasLibro);
+
+                TextView DimensionesLibro = (TextView) findViewById(R.id.InfoDimensiones);
+                DimensionesLibro.setText(dimensionesLibro);
+
+                TextView SinopsisLibro = (TextView) findViewById(R.id.sipnosis);
+                SinopsisLibro.setText(sinopsisLibro);
+
+                ImageView ImagenLibro = (ImageView) findViewById(R.id.image_Portada);
+                Glide.with(InformacionLibro.this).load(imagenLibro).into(ImagenLibro);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         mDatabase.child("Alumno").child(idAlumno).addValueEventListener(new ValueEventListener() {
             @Override
 
@@ -78,8 +141,6 @@ public class InformacionLibro extends AppCompatActivity implements NavigationVie
                     String nombre = dataSnapshot.child("Nombre").getValue().toString();
                     String noControl = dataSnapshot.child("Nocontrol").getValue().toString();
                     String imagen = dataSnapshot.child("Imagen").getValue().toString();
-                    /*mTextViewDataNombre.setText(nombre);*/
-                    /*Toast.makeText(PantallaPrincipal.this, "El nombre del usuario es: "+ nombre, Toast.LENGTH_SHORT).show()*/;
 
                     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                     View headerView = navigationView.getHeaderView(0);
@@ -93,8 +154,6 @@ public class InformacionLibro extends AppCompatActivity implements NavigationVie
                     ImageView imagena = (ImageView) headerView.findViewById(R.id.ImageViewPrincipal);
 
                     Glide.with(InformacionLibro.this).load(imagen).into(imagena);
-
-
                 }
             }
 
@@ -103,11 +162,68 @@ public class InformacionLibro extends AppCompatActivity implements NavigationVie
                 Toast.makeText(InformacionLibro.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
+
         buttonApartar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Se ha apartado el libro", Toast.LENGTH_SHORT);
-                toast.show();
+                Map<String, Object> map = new HashMap<>();
+                map.put("IdLibro",idLibro);
+                map.put("IdAlumno",idAlumno);
+                ValidarLibroApartado(mDatabaseLibroApartado,idLibro,map);
+                /*if(ValidarLibroApartado(mDatabaseLibroApartado,idLibro)){
+                    Toast toast = Toast.makeText(getApplicationContext(), "No se puede apatar el libro", Toast.LENGTH_SHORT);
+                    toast.show();
+                }else{
+                    Toast toast = Toast.makeText(getApplicationContext(), "Sí se puede apatar el libro", Toast.LENGTH_SHORT);
+                    toast.show();
+                }*/
+
+                /*mDatabaseLibroApartado.child(String.valueOf(idrandom)).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                        Toast toast = Toast.makeText(getApplicationContext(), "Se ha apartado el libro", Toast.LENGTH_SHORT);
+                        toast.show();
+                        buttonApartar.setBackgroundColor(getResources().getColor(R.color.gray));
+                        buttonApartar.setEnabled(false);
+                    }
+                });*/
+            }
+        });
+
+    }
+
+    public void ValidarLibroApartado (DatabaseReference database, String idLibro, Map map){
+        Query q = database.orderByChild("IdLibro").equalTo(idLibro);
+
+        q.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int count = 0;
+                for (DataSnapshot datasnapshot: snapshot.getChildren()){
+                    count++;
+                }
+
+                if(count == 0){
+                    //Toast.makeText(InformacionLibro.this, "Sí se puede apartar ", Toast.LENGTH_SHORT).show();
+                    mDatabaseLibroApartado.child(String.valueOf(idrandom)).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                            Toast toast = Toast.makeText(getApplicationContext(), "Se ha apartado el libro", Toast.LENGTH_SHORT);
+                            toast.show();
+                            buttonApartar.setBackgroundColor(getResources().getColor(R.color.gray));
+                            buttonApartar.setEnabled(false);
+                        }
+                    });
+                }else{
+                    Toast.makeText(InformacionLibro.this, "El libro ya está apartado", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }

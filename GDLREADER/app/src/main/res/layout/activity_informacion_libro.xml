@@ -58,36 +58,138 @@
             android:layout_marginTop="20dp"
             android:background="#C1C3C5"
             android:src="@drawable/portada1" />
+
         <TextView
             android:id="@+id/encabezadoDaatosGenerales"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/image_Portada"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="21dp"
             android:text="Datos generales"
             android:textColor="@color/color_principal"
             android:textSize="22dp"
             android:textStyle="bold" />
 
+
         <TextView
-            android:id="@+id/datosGenerales"
-            android:layout_width="match_parent"
+            android:id="@+id/IAutor"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/encabezadoDaatosGenerales"
             android:padding="10dp"
-            android:text="@string/datos_principales_libro"
+            android:text="Creado por: "
             android:textColor="#2F7EA8"
             android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/InfoAutor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/encabezadoDaatosGenerales"
+            android:layout_toEndOf="@id/IAutor"
+            android:padding="10dp"
+            android:text=""
+            android:layout_marginStart="20dp"
+            android:textColor="#2F7EA8"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/IEditorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/IAutor"
+            android:padding="10dp"
+            android:text="Editorial: "
+            android:textColor="#2F7EA8"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/InfoEditorial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/IAutor"
+            android:layout_toEndOf="@id/IEditorial"
+            android:padding="10dp"
+            android:text=""
+            android:layout_marginStart="40dp"
+            android:textColor="#2F7EA8"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/IIdioma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/IEditorial"
+            android:padding="10dp"
+            android:text="Idioma: "
+            android:textColor="#2F7EA8"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/InfoIdioma"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/IEditorial"
+            android:layout_toEndOf="@id/IIdioma"
+            android:padding="10dp"
+            android:text=""
+            android:layout_marginStart="48dp"
+            android:textColor="#2F7EA8"
+            android:textSize="15dp" />
+        <TextView
+            android:id="@+id/IPaginas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/IIdioma"
+            android:padding="10dp"
+            android:text="Paginas: "
+            android:textColor="#2F7EA8"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/InfoPaginas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/InfoIdioma"
+            android:layout_toEndOf="@id/IPaginas"
+            android:padding="10dp"
+            android:text=""
+            android:layout_marginStart="40dp"
+            android:textColor="#2F7EA8"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/IDimensiones"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/IPaginas"
+            android:padding="10dp"
+            android:text="Dismensiones: "
+            android:textColor="#2F7EA8"
+            android:textSize="15dp" />
+        <TextView
+            android:id="@+id/InfoDimensiones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/InfoPaginas"
+            android:layout_toEndOf="@id/IDimensiones"
+            android:padding="10dp"
+            android:text=""
+            android:textColor="#2F7EA8"
+            android:textSize="15dp" />
+
         <TextView
             android:id="@+id/encabezadoSipnosis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/datosGenerales"
+            android:layout_below="@id/IDimensiones"
             android:layout_marginTop="20dp"
             android:text="Sipnosis"
             android:textColor="@color/color_principal"
             android:textSize="22dp"
             android:textStyle="bold" />
+
+
         <com.codesgood.views.JustifiedTextView
             android:id="@+id/sipnosis"
             android:layout_width="match_parent"
@@ -107,7 +209,8 @@
             android:background="@color/color_principal"
             android:text="Apartar"
             android:textColor="@color/white"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            />
       </RelativeLayout>
     </ScrollView>
   </LinearLayout>

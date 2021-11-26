@@ -95,6 +95,7 @@
                     android:textColor="@color/color_principal"
                     android:textSize="20dp" />
                 <TextView
+                    android:id="@+id/correoNosotros"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/telefono"
@@ -103,9 +104,6 @@
                     android:textAlignment="center"
                     android:textColor="@color/color_principal"
                     android:textSize="20dp" />
-
-
-
             </RelativeLayout>
 
         </ScrollView>

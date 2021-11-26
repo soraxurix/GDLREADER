@@ -57,17 +57,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/text_titulo"
-                    android:queryHint="Busca tu genero"
                     android:iconifiedByDefault="false"
-                    />
+                    android:queryHint="Busca tu genero" />
 
                 <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/buscador"
                     android:layout_marginTop="25dp"
-                    android:rowCount="3"
-                    android:columnCount="2">
+                    android:columnCount="2"
+                    android:rowCount="3">
 
                     <!--Primera tarjeta-->
                     <androidx.cardview.widget.CardView
@@ -75,10 +74,10 @@
                         android:layout_width="50dp"
                         android:layout_height="120dp"
                         android:layout_row="0"
-                        android:layout_column="0"
-                        android:layout_gravity="fill"
                         android:layout_rowWeight="1"
+                        android:layout_column="0"
                         android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
                         android:layout_margin="8dp"
                         app:cardCornerRadius="8dp"
                         app:cardElevation="8dp">
@@ -89,18 +88,20 @@
                             android:layout_gravity="center_vertical|center_horizontal"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <ImageView
                                 android:id="@+id/card_icono1"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_gravity="center"
                                 android:src="@drawable/icon_tics" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="TICS"
-                                android:textColor="@color/color_principal"
                                 android:textAlignment="center"
+                                android:textColor="@color/color_principal"
                                 android:textSize="22dp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -109,33 +110,37 @@
 
                     <!--Segunda tarjeta-->
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/CardView2"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:layout_row="0"
-                        android:layout_column="1"
-                        android:layout_gravity="fill"
                         android:layout_rowWeight="1"
+                        android:layout_column="1"
                         android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
                         android:layout_margin="8dp"
                         app:cardCornerRadius="8dp"
                         app:cardElevation="8dp">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical|center_horizontal"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <ImageView
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_gravity="center"
                                 android:src="@drawable/icon_science" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Química"
-                                android:textColor="@color/color_principal"
                                 android:textAlignment="center"
+                                android:textColor="@color/color_principal"
                                 android:textSize="22dp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -143,33 +148,37 @@
 
                     <!--Tercera tarjeta-->
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/CardView3"
                         android:layout_width="50dp"
                         android:layout_height="120dp"
                         android:layout_row="1"
-                        android:layout_column="0"
-                        android:layout_gravity="fill"
                         android:layout_rowWeight="1"
+                        android:layout_column="0"
                         android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
                         android:layout_margin="8dp"
                         app:cardCornerRadius="8dp"
                         app:cardElevation="8dp">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical|center_horizontal"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <ImageView
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_gravity="center"
                                 android:src="@drawable/icon_calcu" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Matemáticas"
-                                android:textColor="@color/color_principal"
                                 android:textAlignment="center"
+                                android:textColor="@color/color_principal"
                                 android:textSize="22dp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -177,33 +186,37 @@
 
                     <!--Cuarta tarjeta-->
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/CardView4"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:layout_row="1"
-                        android:layout_column="1"
-                        android:layout_gravity="fill"
                         android:layout_rowWeight="1"
+                        android:layout_column="1"
                         android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
                         android:layout_margin="8dp"
                         app:cardCornerRadius="8dp"
                         app:cardElevation="8dp">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical|center_horizontal"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <ImageView
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_gravity="center"
                                 android:src="@drawable/icon_library" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Lógistica"
-                                android:textColor="@color/color_principal"
+                                android:text="Logística"
                                 android:textAlignment="center"
+                                android:textColor="@color/color_principal"
                                 android:textSize="22dp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -211,33 +224,37 @@
 
                     <!--Quinto tarjeta-->
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/CardView5"
                         android:layout_width="50dp"
                         android:layout_height="120dp"
                         android:layout_row="2"
-                        android:layout_column="0"
-                        android:layout_gravity="fill"
                         android:layout_rowWeight="1"
+                        android:layout_column="0"
                         android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
                         android:layout_margin="8dp"
                         app:cardCornerRadius="8dp"
                         app:cardElevation="8dp">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical|center_horizontal"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <ImageView
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_gravity="center"
                                 android:src="@drawable/icon_flash" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Electrónica"
-                                android:textColor="@color/color_principal"
                                 android:textAlignment="center"
+                                android:textColor="@color/color_principal"
                                 android:textSize="22dp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -245,33 +262,37 @@
 
                     <!--Sexta tarjeta-->
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/CardView6"
                         android:layout_width="50dp"
                         android:layout_height="120dp"
                         android:layout_row="2"
-                        android:layout_column="1"
-                        android:layout_gravity="fill"
                         android:layout_rowWeight="1"
+                        android:layout_column="1"
                         android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
                         android:layout_margin="8dp"
                         app:cardCornerRadius="8dp"
                         app:cardElevation="8dp">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical|center_horizontal"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <ImageView
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_gravity="center"
                                 android:src="@drawable/icon_business" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Negocios"
-                                android:textColor="@color/color_principal"
                                 android:textAlignment="center"
+                                android:textColor="@color/color_principal"
                                 android:textSize="22dp"
                                 android:textStyle="bold" />
                         </LinearLayout>

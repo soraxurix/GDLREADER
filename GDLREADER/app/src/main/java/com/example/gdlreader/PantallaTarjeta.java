@@ -66,6 +66,8 @@ public class PantallaTarjeta extends AppCompatActivity implements NavigationView
                     String nombre = dataSnapshot.child("Nombre").getValue().toString();
                     String noControl = dataSnapshot.child("Nocontrol").getValue().toString();
                     String imagen = dataSnapshot.child("Imagen").getValue().toString();
+                    String tarjeta = dataSnapshot.child("Tarjeta").getValue().toString();
+
                     /*mTextViewDataNombre.setText(nombre);*/
                     /*Toast.makeText(PantallaPrincipal.this, "El nombre del usuario es: "+ nombre, Toast.LENGTH_SHORT).show()*/;
 
@@ -81,6 +83,20 @@ public class PantallaTarjeta extends AppCompatActivity implements NavigationView
                     ImageView imagena = (ImageView) headerView.findViewById(R.id.ImageViewPrincipal);
 
                     Glide.with(PantallaTarjeta.this).load(imagen).into(imagena);
+
+                    //Datos del perfil del usuario
+                    TextView NombreAlumnoT = (TextView) findViewById(R.id.Nombre);
+                    NombreAlumnoT.setText(nombre);
+
+                    TextView NoControlAlumnoT = (TextView) findViewById(R.id.NoControl);
+                    NoControlAlumnoT.setText(noControl);
+
+                    TextView TarjetaAlumno = (TextView) findViewById(R.id.NoTarjeta);
+                    TarjetaAlumno.setText(tarjeta);
+
+                    ImageView ImagenAlumnoT = (ImageView) findViewById(R.id.Foto);
+
+                    Glide.with(PantallaTarjeta.this).load(imagen).into(ImagenAlumnoT);
 
 
                 }

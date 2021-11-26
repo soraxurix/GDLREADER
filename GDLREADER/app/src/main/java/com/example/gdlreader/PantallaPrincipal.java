@@ -12,8 +12,10 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,9 +30,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class PantallaPrincipal extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
@@ -41,7 +47,7 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
 
     Handler handler = new Handler();
 
-
+    private ImageView imagePortadaLibro;
     private ImageView imageView1;
     private ImageView imageView2;
     private ImageView imageView3;
@@ -58,25 +64,32 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
     FirebaseDatabase firebaseDatabase;
     DatabaseReference mDatabase;
 
+    //Variables para mostrar los datos del libro
+    RecyclerView recyclerView;
+    DatabaseReference mDatabaseLibro;
+    MyAdapter myAdapter;
+    ArrayList<Libro> list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Contexto
-
         setContentView(R.layout.activity_pantalla_principal);
         /*Inicializamos variables*/
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         toolbarNav = findViewById(R.id.toolbar);
-        imageView1 =  (ImageView) findViewById(R.id.imagePortada1);
+        /*imageView1 =  (ImageView) findViewById(R.id.imagePortada1);
         imageView2 =  (ImageView) findViewById(R.id.imagePortada2);
-        imageView3 =  (ImageView) findViewById(R.id.imagePortada3);
+        imageView3 =  (ImageView) findViewById(R.id.imagePortada3);*/
+        //imagePortadaLibro = (ImageView) findViewById(R.id.imageviewPortadaLibro);
+
+        recyclerView = findViewById(R.id.ListaLibro);
         ShimmerProceso();
 
         //Inicializar la base de datos
         mAtuh = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        /*inicializarFirebase();*/
 
         //Instanciamos la variable para los datos que necesitemos.
         mTextViewDataNombre = (TextView) findViewById(R.id.textViewEncabezado);
@@ -84,6 +97,34 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
 
         //Obtenemos el id de la sesion iniciada
         String idAlumno = mAtuh.getCurrentUser().getUid();
+
+        //Definir las variables para mostrar los libros
+        mDatabaseLibro = FirebaseDatabase.getInstance().getReference("Libro");
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        list = new ArrayList<>();
+        myAdapter = new MyAdapter(this,list);
+        recyclerView.setAdapter(myAdapter);
+
+        mDatabaseLibro.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for( DataSnapshot dataSnapshot: snapshot.getChildren()){
+                    Libro libro = dataSnapshot.getValue(Libro.class);
+                    list.add(libro);
+                }
+                myAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        //Referencia para mostrar los datos en el navigation view
         mDatabase.child("Alumno").child(idAlumno).addValueEventListener(new ValueEventListener() {
             @Override
 
@@ -107,8 +148,6 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
                     ImageView imagena = (ImageView) headerView.findViewById(R.id.ImageViewPrincipal);
 
                     Glide.with(PantallaPrincipal.this).load(imagen).into(imagena);
-
-
                 }
             }
 
@@ -132,51 +171,25 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
         navigationView.setNavigationItemSelectedListener(this);
 
         /*Creamos el evento para seleccionar un libro*/
-        imageView1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openInformacionLibros();
-            }
-        });
 
-        imageView2.setOnClickListener(new View.OnClickListener() {
+        /*imagePortadaLibro.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                openInformacionLibros();
+            public void onClick(View v) {
+                //Toast.makeText(PantallaPrincipal.this,"Joto",Toast.LENGTH_SHORT).show();
             }
-        });
-
-        imageView3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openInformacionLibros();
-            }
-        });
+        });*/
 
         /*Aquí se cambia el color del action bar*/
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.white)));
-                //Sacamos los valores
-
-
-
 
     }
 
+
+
     public void ShimmerProceso(){
         layout = (ShimmerFrameLayout) findViewById(R.id.shimmer);
-        textView1 = (TextView) findViewById(R.id.textviewlibro1);
-        textView2 = (TextView) findViewById(R.id.textviewlibro2);
-        textView3 = (TextView) findViewById(R.id.textviewlibro3);
 
-        textView4 = (TextView) findViewById(R.id.textAutor1);
-        textView5 = (TextView) findViewById(R.id.textAutor2);
-        textView6 = (TextView) findViewById(R.id.textAutor3);
-
-        textView7 = (TextView) findViewById(R.id.textGenero);
-        textView8 = (TextView) findViewById(R.id.textGenero2);
-        textView9 = (TextView) findViewById(R.id.textGenero3);
-
-        textviewEncabezado = (TextView)findViewById(R.id.textViewEncabezado);
+        textviewEncabezado = (TextView)findViewById(R.id.textviewEncabezadoPantallaPrincipal);
 
         handler.postDelayed(new Runnable() {
             @Override
@@ -185,22 +198,10 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
                 layout.hideShimmer();
                 layout.setVisibility(View.GONE);
 
-
-                imageView1.setVisibility(View.VISIBLE);
-                imageView2.setVisibility(View.VISIBLE);
-                imageView3.setVisibility(View.VISIBLE);
-                textView1.setVisibility(View.VISIBLE);
-                textView2.setVisibility(View.VISIBLE);
-                textView3.setVisibility(View.VISIBLE);
-                textView4.setVisibility(View.VISIBLE);
-                textView5.setVisibility(View.VISIBLE);
-                textView6.setVisibility(View.VISIBLE);
-                textView7.setVisibility(View.VISIBLE);
-                textView8.setVisibility(View.VISIBLE);
-                textView9.setVisibility(View.VISIBLE);
                 textviewEncabezado.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.VISIBLE);
             }
-        },4000);
+        },999);
     }
 
     public void openInformacionLibros(){
@@ -246,8 +247,8 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
                 break;
             case R.id.nav_cerrarsesion:
                 mAtuh.signOut();
-                Toast.makeText(PantallaPrincipal.this, "Sesion Finalizada", Toast.LENGTH_SHORT).show();
-                intent = new Intent(this, MainActivity.class);
+                Toast.makeText(this, "Sesion Finalizada", Toast.LENGTH_SHORT).show();
+                intent = new Intent(PantallaPrincipal.this, MainActivity.class);
                 startActivity(intent);
                 finish();
                 break;
@@ -263,5 +264,6 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
         }
         return true;
     }
+
 
 }

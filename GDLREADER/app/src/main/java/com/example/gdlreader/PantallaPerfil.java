@@ -52,6 +52,7 @@ public class PantallaPerfil extends AppCompatActivity implements NavigationView.
         navigationView = findViewById(R.id.nav_view);
         toolbarNav = findViewById(R.id.toolbar);
 
+
         //Inicializar la base de datos
         mAtuh = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -64,7 +65,11 @@ public class PantallaPerfil extends AppCompatActivity implements NavigationView.
                 if (dataSnapshot.exists()) {
                     String nombre = dataSnapshot.child("Nombre").getValue().toString();
                     String noControl = dataSnapshot.child("Nocontrol").getValue().toString();
+                    String correo = dataSnapshot.child("Correo").getValue().toString();
+                    String carrera = dataSnapshot.child("Carrera").getValue().toString();
+                    String semestre = dataSnapshot.child("Semestre").getValue().toString();
                     String imagen = dataSnapshot.child("Imagen").getValue().toString();
+
                     /*mTextViewDataNombre.setText(nombre);*/
                     /*Toast.makeText(PantallaPrincipal.this, "El nombre del usuario es: "+ nombre, Toast.LENGTH_SHORT).show()*/;
 
@@ -80,6 +85,27 @@ public class PantallaPerfil extends AppCompatActivity implements NavigationView.
                     ImageView imagena = (ImageView) headerView.findViewById(R.id.ImageViewPrincipal);
 
                     Glide.with(PantallaPerfil.this).load(imagen).into(imagena);
+
+                    //Datos del perfil del usuario
+                    TextView NombreAlumno = (TextView) findViewById(R.id.textNombreUsuario);
+                    NombreAlumno.setText(nombre);
+
+                    TextView NoControlAlumno = (TextView) findViewById(R.id.textNumeroControl);
+                    NoControlAlumno.setText(noControl);
+
+                    TextView CorreoAlumno = (TextView) findViewById(R.id.textCorreo);
+                    CorreoAlumno.setText(correo);
+
+                    TextView CarreraAlumno = (TextView) findViewById(R.id.textCarrera);
+                    CarreraAlumno.setText(carrera);
+
+                    TextView SemestreAlumno = (TextView) findViewById(R.id.textSemestre);
+                    SemestreAlumno.setText(semestre);
+
+                    ImageView ImagenAlumno = (ImageView) findViewById(R.id.imagenPerfil);
+
+                    Glide.with(PantallaPerfil.this).load(imagen).into(ImagenAlumno);
+
 
 
                 }

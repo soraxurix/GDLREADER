@@ -3,7 +3,6 @@ package com.example.gdlreader;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -11,63 +10,107 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-public class PantallaBusqueda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class PantallaResultadoBusqueda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     Toolbar toolbarNav;
+    ShimmerFrameLayout layout;
+
+    Handler handler = new Handler();
+
+    private TextView textviewEncabezado;
+
+    //Creamos la variable para mostrar los datos de la bd
+    private TextView mTextViewDataNombre;
+    private TextView mTextViewDataNocontrol;
+
+
+
     //Creamos la variable de sesion.
     FirebaseAuth mAtuh;
     FirebaseDatabase firebaseDatabase;
-    DatabaseReference mDatabase;
-    CardView cardView1, cardView2, cardView3, cardView4, cardView5, cardView6;
-    SearchView searchView;
+    DatabaseReference mDatabase, mDatabaseLibro, mDatabaseLibroApartado;
+
+    //Variables para mostrar los datos del libro
+    RecyclerView recyclerView;
+    MyAdapter myAdapter;
+    ArrayList<Libro> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pantalla_busqueda);
+        setContentView(R.layout.activity_pantalla_resultado_busqueda);
 
-        getWindow().setStatusBarColor(ContextCompat.getColor(PantallaBusqueda.this,R.color.color_principal));
+        //Obtenemos el genero del intent anterior
+        String Buscador = getIntent().getStringExtra("keyBuscador");
 
-        /*Inicializamos variables*/
-        searchView = findViewById(R.id.buscador);
+
+
+        //Inicializamos variables
         drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         toolbarNav = findViewById(R.id.toolbar);
-        //Definimos el id de las tarjetas
-        cardView1 =  (CardView) findViewById(R.id.CardView1);
-        cardView2 =  (CardView) findViewById(R.id.CardView2);
-        cardView3 =  (CardView) findViewById(R.id.CardView3);
-        cardView4 =  (CardView) findViewById(R.id.CardView4);
-        cardView5 =  (CardView) findViewById(R.id.CardView5);
-        cardView6 =  (CardView) findViewById(R.id.CardView6);
+
+        recyclerView = findViewById(R.id.ListaLibro);
+        ShimmerProceso();
 
         //Inicializar la base de datos
         mAtuh = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        //Instanciamos la variable para los datos que necesitemos.
+        mTextViewDataNombre = (TextView) findViewById(R.id.textViewEncabezado);
+        mTextViewDataNocontrol = (TextView) findViewById(R.id. TextViewNoControlA);
+
         //Obtenemos el id de la sesion iniciada
         String idAlumno = mAtuh.getCurrentUser().getUid();
+
+        //Definir las variables para mostrar los libros
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabaseLibro = FirebaseDatabase.getInstance().getReference("Libro");
+        mDatabaseLibroApartado = FirebaseDatabase.getInstance().getReference("Apartado");
+
+        FiltroBusqueda(mDatabaseLibro,Buscador);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        list = new ArrayList<>();
+        myAdapter = new MyAdapter(this,list);
+        recyclerView.setAdapter(myAdapter);
+
+
+        //Referencia para mostrar los datos en el navigation view
         mDatabase.child("Alumno").child(idAlumno).addValueEventListener(new ValueEventListener() {
             @Override
 
@@ -76,8 +119,6 @@ public class PantallaBusqueda extends AppCompatActivity implements NavigationVie
                     String nombre = dataSnapshot.child("Nombre").getValue().toString();
                     String noControl = dataSnapshot.child("Nocontrol").getValue().toString();
                     String imagen = dataSnapshot.child("Imagen").getValue().toString();
-                    /*mTextViewDataNombre.setText(nombre);*/
-                    /*Toast.makeText(PantallaPrincipal.this, "El nombre del usuario es: "+ nombre, Toast.LENGTH_SHORT).show()*/;
 
                     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                     View headerView = navigationView.getHeaderView(0);
@@ -90,16 +131,20 @@ public class PantallaBusqueda extends AppCompatActivity implements NavigationVie
 
                     ImageView imagena = (ImageView) headerView.findViewById(R.id.ImageViewPrincipal);
 
-                    Glide.with(PantallaBusqueda.this).load(imagen).into(imagena);
+                    Glide.with(PantallaResultadoBusqueda.this).load(imagen).into(imagena);
+
+
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(PantallaBusqueda.this, "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PantallaResultadoBusqueda.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
-        navigationView.setNavigationItemSelectedListener(this);
+
+
+        getWindow().setStatusBarColor(ContextCompat.getColor(PantallaResultadoBusqueda.this,R.color.color_principal));
 
         /*Proceso para action bar*/
         navigationView.bringToFront();
@@ -108,101 +153,69 @@ public class PantallaBusqueda extends AppCompatActivity implements NavigationVie
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        //Caso que se seleccione Tic's
-        cardView1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGeneroLibrosTics();
-            }
-        });
-        //Caso que se seleccione Química
-        cardView2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGeneroLibrosQuimica();
-            }
-        });
-        //Caso que se seleccione Matemáticas
-        cardView3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGeneroLibrosMatematicas();
-            }
-        });
-        //Caso que se seleccione Logística
-        cardView4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGeneroLibrosLogistica();
-            }
-        });
-        //Caso que se seleccione Electrónica
-        cardView5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGeneroLibrosElectronica();
-            }
-        });
-        //Caso que se seleccione Negocios
-        cardView6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGeneroLibrosNegocios();
-            }
-        });
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                openResultadoBusqueda(query);
-                return false;
-            }
+        navigationView.setNavigationItemSelectedListener(this);
 
+        /*Aquí se cambia el color del action bar*/
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.white)));
+
+    }
+    public void FiltroBusqueda (DatabaseReference database, String ResultadoBusqueda){
+        mDatabaseLibro.addValueEventListener(new ValueEventListener() {
             @Override
-            public boolean onQueryTextChange(String newText) {
-                if (searchView.getQuery().length() == 0) {
-                    Toast.makeText(PantallaBusqueda.this, "No has dado submit", Toast.LENGTH_SHORT).show();
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for( DataSnapshot dataSnapshot: snapshot.getChildren()){
+                    String NoLibro = dataSnapshot.child("NoLibro").getValue().toString();
+                    String Titulo = dataSnapshot.child("Titulo").getValue().toString();
+                    String Genero = dataSnapshot.child("Genero").getValue().toString();
+                    String Autor = dataSnapshot.child("Autor").getValue().toString();
+
+
+
+                    if(NoLibro.equals(ResultadoBusqueda) ||Titulo.equals(ResultadoBusqueda) ||Genero.equals(ResultadoBusqueda) ||Autor.equals(ResultadoBusqueda) ){
+                        Libro libro = dataSnapshot.getValue(Libro.class);
+                        list.add(libro);
+                    }
                 }
-                return false;
+                myAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
+    }
+    public void ShimmerProceso(){
+        layout = (ShimmerFrameLayout) findViewById(R.id.shimmer);
 
+        textviewEncabezado = (TextView)findViewById(R.id.textviewEncabezado);
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                layout.stopShimmer();
+                layout.hideShimmer();
+                layout.setVisibility(View.GONE);
+
+                textviewEncabezado.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.VISIBLE);
+            }
+        },999);
     }
 
-    public void openResultadoBusqueda(String ResultadoBusqueda) {
-        Intent intent = new Intent(this, PantallaResultadoBusqueda.class);
-        intent.putExtra("keyBuscador", ResultadoBusqueda);
+    public void openInformacionLibros(){
+        Intent intent = new Intent(this, InformacionLibro.class);
         startActivity(intent);
     }
-    public void openGeneroLibrosTics() {
-        Intent intent = new Intent(this, GeneroLibros.class);
-        intent.putExtra("keyGenero","Tic's");
-        startActivity(intent);
-    }
-    public void openGeneroLibrosQuimica() {
-        Intent intent = new Intent(this, GeneroLibros.class);
-        intent.putExtra("keyGenero","Química");
-        startActivity(intent);
-    }
-    public void openGeneroLibrosMatematicas() {
-        Intent intent = new Intent(this, GeneroLibros.class);
-        intent.putExtra("keyGenero","Matemáticas");
-        startActivity(intent);
-    }
-    public void openGeneroLibrosLogistica() {
-        Intent intent = new Intent(this, GeneroLibros.class);
-        intent.putExtra("keyGenero","Logistíca");
-        startActivity(intent);
-    }
-    public void openGeneroLibrosElectronica() {
-        Intent intent = new Intent(this, GeneroLibros.class);
-        intent.putExtra("keyGenero","Electrónica");
-        startActivity(intent);
-    }
-    public void openGeneroLibrosNegocios() {
-        Intent intent = new Intent(this, GeneroLibros.class);
-        intent.putExtra("keyGenero","Negocios");
-        startActivity(intent);
+
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else{
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -216,7 +229,7 @@ public class PantallaBusqueda extends AppCompatActivity implements NavigationVie
             case R.id.nav_perfil:
                 /*Toast toast = Toast.makeText(getApplicationContext(), "Has dado click en perfil", Toast.LENGTH_SHORT);
                 toast.show();*/
-                intent = new Intent(PantallaBusqueda.this, PantallaPerfil.class);
+                intent = new Intent(PantallaResultadoBusqueda.this, PantallaPerfil.class);
                 startActivity(intent);
                 break;
             case R.id.nav_Busqueda:
@@ -233,8 +246,8 @@ public class PantallaBusqueda extends AppCompatActivity implements NavigationVie
                 break;
             case R.id.nav_cerrarsesion:
                 mAtuh.signOut();
-                Toast.makeText(PantallaBusqueda.this, "Sesion Finalizada", Toast.LENGTH_SHORT).show();
-                intent = new Intent(this, MainActivity.class);
+                Toast.makeText(this, "Sesion Finalizada", Toast.LENGTH_SHORT).show();
+                intent = new Intent(PantallaResultadoBusqueda.this, MainActivity.class);
                 startActivity(intent);
                 finish();
                 break;
@@ -248,6 +261,6 @@ public class PantallaBusqueda extends AppCompatActivity implements NavigationVie
                 startActivity(intent);
                 break;
         }
-        return true;
+        return false;
     }
 }

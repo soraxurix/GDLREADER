@@ -16,6 +16,7 @@
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/activity_pantalla_mis_libros.xml" value="0.33" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/activity_pantalla_perfil.xml" value="0.33" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/activity_pantalla_principal.xml" value="0.33" />
+        <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/activity_pantalla_resultado_busqueda.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/activity_pantalla_tarjeta.xml" value="0.33" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/activity_registrar.xml" value="0.33" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/activity_sobre_nosotros.xml" value="0.30085470085470084" />
@@ -24,6 +25,7 @@
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/fragment_slideshow.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/header.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/item_libro.xml" value="0.33" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/main_toolbar.xml" value="0.17654508611955422" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/layout/shimmer_layout.xml" value="0.21" />
         <entry key="..\:/Users/iacd/AndroidStudioProjects/GDLREADER/app/src/main/res/menu/activity_main_drawer.xml" value="0.35104166666666664" />
