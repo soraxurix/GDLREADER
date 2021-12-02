@@ -49,7 +49,7 @@
                     android:id="@+id/textViewEncabezado"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tarjeta"
+                    android:text="@string/tarjeta"
                     android:textAlignment="center"
                     android:textColor="@color/color_principal"
                     android:textSize="30dp"

@@ -46,7 +46,7 @@
                     android:id="@+id/textviewEncabezado"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Mis libros"
+                    android:text="@string/mis_libros"
                     android:textColor="@color/color_principal"
                     android:textSize="28dp"
                     android:textAlignment="center"

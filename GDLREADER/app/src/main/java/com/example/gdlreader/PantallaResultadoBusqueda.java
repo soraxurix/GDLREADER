@@ -33,12 +33,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.novoda.merlin.Bindable;
+import com.novoda.merlin.Connectable;
+import com.novoda.merlin.Disconnectable;
+import com.novoda.merlin.Merlin;
+import com.novoda.merlin.NetworkStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PantallaResultadoBusqueda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class PantallaResultadoBusqueda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Connectable, Disconnectable, Bindable {
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
@@ -65,6 +70,9 @@ public class PantallaResultadoBusqueda extends AppCompatActivity implements Navi
     RecyclerView recyclerView;
     MyAdapter myAdapter;
     ArrayList<Libro> list;
+
+    //Merlin
+    private Merlin merlin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +117,14 @@ public class PantallaResultadoBusqueda extends AppCompatActivity implements Navi
         myAdapter = new MyAdapter(this,list);
         recyclerView.setAdapter(myAdapter);
 
+        //Merlin
+        merlin = new Merlin.Builder().withConnectableCallbacks()
+                .withDisconnectableCallbacks()
+                .withBindableCallbacks()
+                .build(this);
+        merlin.registerBindable(this);
+        merlin.registerConnectable(this);
+        merlin.registerDisconnectable(this);
 
         //Referencia para mostrar los datos en el navigation view
         mDatabase.child("Alumno").child(idAlumno).addValueEventListener(new ValueEventListener() {
@@ -139,7 +155,7 @@ public class PantallaResultadoBusqueda extends AppCompatActivity implements Navi
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(PantallaResultadoBusqueda.this, "Error", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(PantallaResultadoBusqueda.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -217,6 +233,47 @@ public class PantallaResultadoBusqueda extends AppCompatActivity implements Navi
             super.onBackPressed();
         }
     }
+
+    //Metodos merlin
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(merlin!=null){
+            merlin.bind();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(merlin!=null){
+            merlin.unbind();
+        }
+    }
+
+    @Override
+    public void onBind(NetworkStatus networkStatus) {
+        if(!networkStatus.isAvailable()){
+            onDisconnect();
+        }
+    }
+
+    @Override
+    public void onConnect() {
+        Toast.makeText(getApplication(),"Conectado a internet", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDisconnect() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplication(),"Sin conexión a internet", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

@@ -21,9 +21,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.novoda.merlin.Bindable;
+import com.novoda.merlin.Connectable;
+import com.novoda.merlin.Disconnectable;
+import com.novoda.merlin.Merlin;
+import com.novoda.merlin.NetworkStatus;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Connectable, Disconnectable, Bindable {
 
     //Creamos variables para guardar los datos de los editext.
     EditText CorreoAL, ContraseñaAL;
@@ -38,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
     //Creamos las variables para la base de datos
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+
+    //Merlin
+    private Merlin merlin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +67,14 @@ public class MainActivity extends AppCompatActivity {
         //Instanciamos las variables
         CorreoAL = (EditText) findViewById(R.id.editTextCorreoA);
         ContraseñaAL = (EditText) findViewById(R.id.editTextContraseñaA);
-
+        //Merlin
+        merlin = new Merlin.Builder().withConnectableCallbacks()
+                .withDisconnectableCallbacks()
+                .withBindableCallbacks()
+                .build(this);
+        merlin.registerBindable(this);
+        merlin.registerConnectable(this);
+        merlin.registerDisconnectable(this);
 
         textView = (TextView) findViewById(R.id.textViewRegistrate);
 
@@ -96,7 +111,45 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }*/
 
+    //Metodos merlin
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        if(merlin!=null){
+            merlin.bind();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(merlin!=null){
+            merlin.unbind();
+        }
+    }
+
+    @Override
+    public void onBind(NetworkStatus networkStatus) {
+        if(!networkStatus.isAvailable()){
+            onDisconnect();
+        }
+    }
+
+    @Override
+    public void onConnect() {
+        //Toast.makeText(getApplication(),"Conectado a internet", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDisconnect() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplication(),"Sin conexión a internet", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     public void openRegistrar() {
         Intent intent = new Intent(this, Registrar.class);

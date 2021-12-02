@@ -29,8 +29,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.novoda.merlin.Bindable;
+import com.novoda.merlin.Connectable;
+import com.novoda.merlin.Disconnectable;
+import com.novoda.merlin.Merlin;
+import com.novoda.merlin.NetworkStatus;
 
-public class PantallaBusqueda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class PantallaBusqueda extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Connectable, Disconnectable, Bindable {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
@@ -41,6 +46,9 @@ public class PantallaBusqueda extends AppCompatActivity implements NavigationVie
     DatabaseReference mDatabase;
     CardView cardView1, cardView2, cardView3, cardView4, cardView5, cardView6;
     SearchView searchView;
+
+    //Merlin
+    private Merlin merlin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +69,15 @@ public class PantallaBusqueda extends AppCompatActivity implements NavigationVie
         cardView4 =  (CardView) findViewById(R.id.CardView4);
         cardView5 =  (CardView) findViewById(R.id.CardView5);
         cardView6 =  (CardView) findViewById(R.id.CardView6);
+
+        //Merlin
+        merlin = new Merlin.Builder().withConnectableCallbacks()
+                .withDisconnectableCallbacks()
+                .withBindableCallbacks()
+                .build(this);
+        merlin.registerBindable(this);
+        merlin.registerConnectable(this);
+        merlin.registerDisconnectable(this);
 
         //Inicializar la base de datos
         mAtuh = FirebaseAuth.getInstance();
@@ -203,6 +220,46 @@ public class PantallaBusqueda extends AppCompatActivity implements NavigationVie
         Intent intent = new Intent(this, GeneroLibros.class);
         intent.putExtra("keyGenero","Negocios");
         startActivity(intent);
+    }
+
+    //Metodos merlin
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(merlin!=null){
+            merlin.bind();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(merlin!=null){
+            merlin.unbind();
+        }
+    }
+
+    @Override
+    public void onBind(NetworkStatus networkStatus) {
+        if(!networkStatus.isAvailable()){
+            onDisconnect();
+        }
+    }
+
+    @Override
+    public void onConnect() {
+        //Toast.makeText(getApplication(),"Conectado a internet", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDisconnect() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplication(),"Sin conexión a internet", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

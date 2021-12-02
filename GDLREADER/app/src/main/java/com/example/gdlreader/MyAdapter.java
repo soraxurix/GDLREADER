@@ -43,6 +43,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyviewHolder> {
         holder.GeneroLibro.setText(libro.getGenero());
         Glide.with(holder.imagen.getContext()).load(libro.getUrl()).into(holder.imagen);
         String Libroid =String.valueOf(libro.getNoLibro()) ;
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

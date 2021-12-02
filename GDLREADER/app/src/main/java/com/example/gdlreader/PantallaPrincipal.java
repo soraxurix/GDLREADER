@@ -35,10 +35,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.ValueEventListener;
+import com.novoda.merlin.Bindable;
+import com.novoda.merlin.Connectable;
+import com.novoda.merlin.Disconnectable;
+import com.novoda.merlin.Merlin;
+import com.novoda.merlin.NetworkStatus;
 
 import java.util.ArrayList;
 
-public class PantallaPrincipal extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class PantallaPrincipal extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Connectable, Disconnectable, Bindable {
+
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
@@ -58,6 +64,8 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
     private TextView mTextViewDataNocontrol;
    /* private DatabaseReference mDatabase;*/
 
+    //Merlin
+    private Merlin merlin;
 
     //Creamos la variable de sesion.
     FirebaseAuth mAtuh;
@@ -84,7 +92,7 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
         imageView3 =  (ImageView) findViewById(R.id.imagePortada3);*/
         //imagePortadaLibro = (ImageView) findViewById(R.id.imageviewPortadaLibro);
 
-        recyclerView = findViewById(R.id.ListaLibro);
+            recyclerView = findViewById(R.id.ListaLibro);
         ShimmerProceso();
 
         //Inicializar la base de datos
@@ -107,6 +115,15 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
         list = new ArrayList<>();
         myAdapter = new MyAdapter(this,list);
         recyclerView.setAdapter(myAdapter);
+
+        //Merlin
+        merlin = new Merlin.Builder().withConnectableCallbacks()
+                .withDisconnectableCallbacks()
+                .withBindableCallbacks()
+                .build(this);
+        merlin.registerBindable(this);
+        merlin.registerConnectable(this);
+        merlin.registerDisconnectable(this);
 
         mDatabaseLibro.addValueEventListener(new ValueEventListener() {
             @Override
@@ -133,7 +150,7 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
                     String nombre = dataSnapshot.child("Nombre").getValue().toString();
                     String noControl = dataSnapshot.child("Nocontrol").getValue().toString();
                     String imagen = dataSnapshot.child("Imagen").getValue().toString();
-                    /*mTextViewDataNombre.setText(nombre);*/
+                       /*mTextViewDataNombre.setText(nombre);*/
                     /*Toast.makeText(PantallaPrincipal.this, "El nombre del usuario es: "+ nombre, Toast.LENGTH_SHORT).show()*/;
 
                     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -175,7 +192,7 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
         /*imagePortadaLibro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(PantallaPrincipal.this,"Joto",Toast.LENGTH_SHORT).show();
+
             }
         });*/
 
@@ -184,7 +201,45 @@ public class PantallaPrincipal extends AppCompatActivity implements NavigationVi
 
     }
 
+    //Metodos merlin
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        if(merlin!=null){
+            merlin.bind();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(merlin!=null){
+            merlin.unbind();
+        }
+    }
+
+    @Override
+    public void onBind(NetworkStatus networkStatus) {
+        if(!networkStatus.isAvailable()){
+            onDisconnect();
+        }
+    }
+
+    @Override
+    public void onConnect() {
+        //Toast.makeText(getApplication(),"Conectado a internet", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDisconnect() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplication(),"Sin conexión a internet", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     public void ShimmerProceso(){
         layout = (ShimmerFrameLayout) findViewById(R.id.shimmer);

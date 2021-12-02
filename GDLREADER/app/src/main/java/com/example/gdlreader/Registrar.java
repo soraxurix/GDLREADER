@@ -54,6 +54,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.novoda.merlin.Bindable;
+import com.novoda.merlin.Connectable;
+import com.novoda.merlin.Disconnectable;
+import com.novoda.merlin.Merlin;
+import com.novoda.merlin.NetworkStatus;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -71,7 +76,7 @@ import java.util.regex.Pattern;
 
 import id.zelory.compressor.Compressor;
 
-public class Registrar extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class Registrar extends AppCompatActivity implements AdapterView.OnItemSelectedListener, Connectable, Disconnectable, Bindable {
     private Button button;
 
     //Definicion de variables
@@ -107,11 +112,31 @@ public class Registrar extends AppCompatActivity implements AdapterView.OnItemSe
     ProgressDialog cargando;
     Uri imageUrl, resultUri;
 
+    private Merlin merlin;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar);
+
+        //Merlin
+        merlin = new Merlin.Builder().withConnectableCallbacks()
+        .withDisconnectableCallbacks()
+        .withBindableCallbacks()
+        .build(this);
+        merlin.registerBindable(this);
+        merlin.registerConnectable(this);
+        merlin.registerDisconnectable(this);
+
+        //Merlin
+        merlin = new Merlin.Builder().withConnectableCallbacks()
+                .withDisconnectableCallbacks()
+                .withBindableCallbacks()
+                .build(this);
+        merlin.registerBindable(this);
+        merlin.registerConnectable(this);
+        merlin.registerDisconnectable(this);
 
         //Este metodo si funciona
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
@@ -186,13 +211,13 @@ public class Registrar extends AppCompatActivity implements AdapterView.OnItemSe
             @Override
             public void onClick(View v) {
 
-
                 mGetContent.launch("image/*");
-
 
 
             }
         });
+
+
 
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -308,5 +333,44 @@ public class Registrar extends AppCompatActivity implements AdapterView.OnItemSe
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+    //Metodos merlin
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(merlin!=null){
+            merlin.bind();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(merlin!=null){
+            merlin.unbind();
+        }
+    }
+
+    @Override
+    public void onBind(NetworkStatus networkStatus) {
+        if(!networkStatus.isAvailable()){
+            onDisconnect();
+        }
+    }
+
+    @Override
+    public void onConnect() {
+        Toast.makeText(getApplication(),"Conectado a internet", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDisconnect() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplication(),"Sin conexión a internet", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -30,7 +30,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/style_border_text"
-                android:hint="No. Control"
+                android:hint="@string/no_control"
                 android:inputType="number" />
 
             <EditText
@@ -41,8 +41,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/style_border_text"
-                android:hint="Nombre completo"
-                />
+                android:hint="@string/nombre_completo" />
 
             <EditText
                 android:id="@+id/editTextCorreo"
@@ -52,7 +51,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/style_border_text"
-                android:hint="Correo electrónico"
+                android:hint="@string/correo_electronico"
                 android:inputType="textEmailAddress" />
 
             <EditText
@@ -63,7 +62,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/style_border_text"
-                android:hint="Contraseña"
+                android:hint="@string/contrase_a"
                 android:inputType="textPassword" />
 
             <TextView
@@ -73,7 +72,7 @@
                 android:layout_below="@id/editTextContraseña"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
-                android:text="Carrera"
+                android:text="@string/carrera"
                 android:textColor="@color/Registrarse"
                 android:textSize="18dp" />
 
@@ -91,12 +90,12 @@
                 android:id="@+id/textsemestre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_below="@id/spinner1"
                 android:layout_centerHorizontal="true"
-                android:text="Semestre"
+                android:layout_marginTop="15dp"
+                android:text="@string/semestre"
                 android:textColor="@color/Registrarse"
-                android:textSize="18dp"
-                android:layout_below="@id/spinner1" />
+                android:textSize="18dp" />
 
             <Spinner
                 android:id="@+id/spinner2"
@@ -138,9 +137,9 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="35dp"
                 android:background="#28A5E8"
-                android:text="Registrarse"
+                android:text="@string/registrate_aqu"
                 android:textColor="#FFF"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
         </RelativeLayout>
     </ScrollView>

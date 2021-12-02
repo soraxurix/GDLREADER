@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,17 +24,29 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.novoda.merlin.Bindable;
+import com.novoda.merlin.Connectable;
+import com.novoda.merlin.Disconnectable;
+import com.novoda.merlin.Merlin;
+import com.novoda.merlin.NetworkStatus;
 
-public class SobreNosotros extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class SobreNosotros extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Connectable, Disconnectable, Bindable {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     Toolbar toolbarNav;
+    ImageView imageWhats, imageFace;
+    String urlw ="https://www.whatsapp.com/", urlf= "https://www.facebook.com/Servicios-Escolares-ITA-1064745943600915";
+
 
     //Creamos la variable de sesion.
     FirebaseAuth mAtuh;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference mDatabase;
+
+
+    //Merlin
+    private Merlin merlin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +57,8 @@ public class SobreNosotros extends AppCompatActivity implements NavigationView.O
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbarNav = findViewById(R.id.toolbar);
+        imageWhats =findViewById(R.id.logow);
+        imageFace =findViewById(R.id.logof);
         //Inicializar la base de datos
         mAtuh = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -84,6 +99,24 @@ public class SobreNosotros extends AppCompatActivity implements NavigationView.O
             }
         });
 
+
+        imageWhats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri linkw = Uri.parse(urlw);
+                Intent intent = new Intent(Intent.ACTION_VIEW,linkw);
+                startActivity(intent);
+            }
+        });
+        imageFace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri linkw = Uri.parse(urlf);
+                Intent intent = new Intent(Intent.ACTION_VIEW,linkw);
+                startActivity(intent);
+            }
+        });
+
         navigationView.setNavigationItemSelectedListener(this);
 
         /*Proceso para action bar*/
@@ -92,6 +125,46 @@ public class SobreNosotros extends AppCompatActivity implements NavigationView.O
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbarNav,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+    }
+
+    //Metodos merlin
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(merlin!=null){
+            merlin.bind();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(merlin!=null){
+            merlin.unbind();
+        }
+    }
+
+    @Override
+    public void onBind(NetworkStatus networkStatus) {
+        if(!networkStatus.isAvailable()){
+            onDisconnect();
+        }
+    }
+
+    @Override
+    public void onConnect() {
+        //Toast.makeText(getApplication(),"Conectado a internet", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDisconnect() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplication(),"Sin conexión a internet", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

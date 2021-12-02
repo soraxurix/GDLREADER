@@ -44,7 +44,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@+id/imageviewPortadaLibro"
-                android:text="Autor: "
+                android:text="@string/autor"
                 android:textColor="@color/color_principal"
                 android:textSize="13sp"
                 android:textStyle="bold" />
@@ -68,7 +68,7 @@
                 android:layout_marginLeft="8dp"
 
                 android:layout_toEndOf="@id/imageviewPortadaLibro"
-                android:text="Genero: "
+                android:text="@string/genero"
                 android:textColor="@color/color_principal"
                 android:textSize="13sp"
                 android:textStyle="bold" />

@@ -55,6 +55,29 @@
         <item>11</item>
         <item>12</item>
     </string-array>
+    <string name="datos_generales">Datos Generales</string>
+    <string name="creado_por">Creado por:</string>
+    <string name="editorial">Editorial:</string>
+    <string name="idioma_info">Idioma:</string>
+    <string name="paginas">Paginas:</string>
+    <string name="dismensiones">Dismensiones:</string>
+    <string name="sipnosis">Sipnosis</string>
+    <string name="apartar">Apartar</string>
+    <string name="correo_electronico">Correo Electrónico</string>
+    <string name="contrase_a">Contraseña</string>
+    <string name="no_tienes_cuenta">¿No tienes cuenta?</string>
+    <string name="registrate_aqu">Registrate Aquí</string>
+    <string name="inicar_sesi_n">Inicar Sesión</string>
+    <string name="busca_tus_libros">Busca tus libros</string>
+    <string name="buscar">Buscar</string>
+    <string name="autor">Autor:</string>
+    <string name="genero">Genero:</string>
+    <string name="libros_interesantes">Libros interesantes</string>
+    <string name="carrera">Carrera</string>
+    <string name="semestre">Semestre</string>
+    <string name="tarjeta">Tarjeta</string>
+    <string name="no_control">No. Control</string>
+    <string name="nombre_completo">Nombre completo</string>
 
 
 </resources>

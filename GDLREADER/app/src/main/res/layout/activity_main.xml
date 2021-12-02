@@ -24,7 +24,7 @@
         android:layout_marginTop="15dp"
         android:width="300dp"
         android:ems="10"
-        android:hint="Correo"
+        android:hint="@string/correo_electronico"
         android:inputType="textEmailAddress"
         android:minHeight="50dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
     <EditText
         android:id="@+id/editTextContraseñaA"
-        android:hint="Contraseña"
+        android:hint="@string/contrase_a"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -49,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="¿No tienes cuenta?"
+        android:text="@string/no_tienes_cuenta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.287"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,12 +60,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Registrate Aquí"
-        android:layout_marginStart="160dp"
+        android:text="@string/registrate_aqu"
+        android:textStyle="bold"
         android:textColor="@color/color_principal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.287"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@+id/textViewCuenta"
+
         app:layout_constraintTop_toBottomOf="@+id/editTextContraseñaA" />
 
     <Button
@@ -75,7 +75,7 @@
         android:width="280dp"
         android:height="60dp"
         android:background="#28A5E8"
-        android:text="Inicar Sesión"
+        android:text="@string/inicar_sesi_n"
         android:textColor="#FFF"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

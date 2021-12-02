@@ -33,12 +33,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.novoda.merlin.Bindable;
+import com.novoda.merlin.Connectable;
+import com.novoda.merlin.Disconnectable;
+import com.novoda.merlin.Merlin;
+import com.novoda.merlin.NetworkStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GeneroLibros extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class GeneroLibros extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Connectable, Disconnectable, Bindable {
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
@@ -54,7 +59,8 @@ public class GeneroLibros extends AppCompatActivity implements NavigationView.On
     private TextView mTextViewDataNombre;
     private TextView mTextViewDataNocontrol;
 
-
+    //Merlin
+    private Merlin merlin;
 
     //Creamos la variable de sesion.
     FirebaseAuth mAtuh;
@@ -66,15 +72,16 @@ public class GeneroLibros extends AppCompatActivity implements NavigationView.On
     MyAdapter myAdapter;
     ArrayList<Libro> list;
 
+    String Genero;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_mis_libros);
 
         //Obtenemos el genero del intent anterior
-        String Genero = getIntent().getStringExtra("keyGenero");
+         Genero = getIntent().getStringExtra("keyGenero");
 
-        Toast.makeText(GeneroLibros.this, "El genero seleccionado: "+Genero, Toast.LENGTH_SHORT).show();
+
 
         //Inicializamos variables
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -109,6 +116,14 @@ public class GeneroLibros extends AppCompatActivity implements NavigationView.On
         myAdapter = new MyAdapter(this,list);
         recyclerView.setAdapter(myAdapter);
 
+        //Merlin
+        merlin = new Merlin.Builder().withConnectableCallbacks()
+                .withDisconnectableCallbacks()
+                .withBindableCallbacks()
+                .build(this);
+        merlin.registerBindable(this);
+        merlin.registerConnectable(this);
+        merlin.registerDisconnectable(this);
 
         //Referencia para mostrar los datos en el navigation view
         mDatabase.child("Alumno").child(idAlumno).addValueEventListener(new ValueEventListener() {
@@ -224,6 +239,7 @@ public class GeneroLibros extends AppCompatActivity implements NavigationView.On
                 layout.hideShimmer();
                 layout.setVisibility(View.GONE);
 
+                textviewEncabezado.setText(Genero);
                 textviewEncabezado.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.VISIBLE);
             }
@@ -242,6 +258,46 @@ public class GeneroLibros extends AppCompatActivity implements NavigationView.On
         }else{
             super.onBackPressed();
         }
+    }
+
+    //Metodos merlin
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(merlin!=null){
+            merlin.bind();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(merlin!=null){
+            merlin.unbind();
+        }
+    }
+
+    @Override
+    public void onBind(NetworkStatus networkStatus) {
+        if(!networkStatus.isAvailable()){
+            onDisconnect();
+        }
+    }
+
+    @Override
+    public void onConnect() {
+        //Toast.makeText(getApplication(),"Conectado a internet", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDisconnect() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplication(),"Sin conexión a internet", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

@@ -48,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_principal"
-                    android:text="Busca tus libros"
+                    android:text="@string/busca_tus_libros"
                     android:textAlignment="center"
                     android:textSize="20dp"/>
 
@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/text_titulo"
                     android:iconifiedByDefault="false"
-                    android:queryHint="Busca tu genero" />
+                    android:hint="@string/buscar" />
 
                 <GridLayout
                     android:layout_width="match_parent"
